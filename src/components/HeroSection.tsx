@@ -1,6 +1,13 @@
 import { useEffect, useRef } from 'react';
 import * as THREE from 'three';
 
+interface Bubble {
+  position: THREE.Vector3;
+  velocity: THREE.Vector3;
+  radius: number;
+  mesh: THREE.Mesh;
+}
+
 export const HeroSection = () => {
   const containerRef = useRef<HTMLDivElement>(null);
   const sceneRef = useRef<THREE.Scene | null>(null);
@@ -9,6 +16,8 @@ export const HeroSection = () => {
   const particlesRef = useRef<THREE.Points | null>(null);
   const mousePosition = useRef({ x: 0, y: 0 });
   const centerPoint = new THREE.Vector3(0, 0, 0);
+  const bubblesRef = useRef<Bubble[]>([]);
+  const bounds = useRef({ width: 10, height: 10, depth: 10 });
 
   useEffect(() => {
     if (!containerRef.current) return;
@@ -30,7 +39,7 @@ export const HeroSection = () => {
     const particles = new Float32Array(particleCount * 3);
     const velocities = new Float32Array(particleCount * 3);
     
-    for (let i = 0; i < particleCount * 3; i += 3) {
+    for (let i = 0; i < particleCount * 10; i += 3) {
       // Create particles in a sphere
       const radius = 1;
       const theta = Math.random() * Math.PI * 2;
@@ -90,6 +99,46 @@ export const HeroSection = () => {
     window.addEventListener('mousemove', handleMouseMove);
     window.addEventListener('touchmove', handleTouchMove);
 
+    // Create bubble material
+    const bubbleMaterial = new THREE.MeshPhongMaterial({
+      color: 0xADD8E6,
+      transparent: true,
+      opacity: 0.6,
+      shininess: 300,
+      specular: 0xffffff,
+    });
+
+    // Create bubbles
+    const createBubble = () => {
+      const radius = Math.random() * 0.5 + 0.1;
+      const geometry = new THREE.SphereGeometry(radius, 16, 16);
+      const mesh = new THREE.Mesh(geometry, bubbleMaterial);
+      
+      const bubble: Bubble = {
+        position: new THREE.Vector3(
+          (Math.random() - 0.5) * bounds.current.width,
+          (Math.random() - 0.5) * bounds.current.height,
+          (Math.random() - 0.5) * bounds.current.depth
+        ),
+        velocity: new THREE.Vector3(
+          (Math.random() - 0.5) * 0.02,
+          (Math.random() - 0.5) * 0.02,
+          (Math.random() - 0.5) * 0.02
+        ),
+        radius,
+        mesh
+      };
+
+      mesh.position.copy(bubble.position);
+      scene.add(mesh);
+      return bubble;
+    };
+
+    // Initialize bubbles
+    for (let i = 0; i < 20; i++) {
+      bubblesRef.current.push(createBubble());
+    }
+
     // Animation
     const animate = () => {
       requestAnimationFrame(animate);
@@ -127,6 +176,35 @@ export const HeroSection = () => {
         particlesRef.current.geometry.attributes.position.needsUpdate = true;
       }
       
+      // Update bubbles
+      bubblesRef.current.forEach(bubble => {
+        // Update position
+        bubble.position.add(bubble.velocity);
+        
+        // Bounce off bounds
+        if (Math.abs(bubble.position.x) > bounds.current.width / 2) {
+          bubble.velocity.x *= -1;
+          bubble.position.x = Math.sign(bubble.position.x) * bounds.current.width / 2;
+        }
+        if (Math.abs(bubble.position.y) > bounds.current.height / 2) {
+          bubble.velocity.y *= -1;
+          bubble.position.y = Math.sign(bubble.position.y) * bounds.current.height / 2;
+        }
+        if (Math.abs(bubble.position.z) > bounds.current.depth / 2) {
+          bubble.velocity.z *= -1;
+          bubble.position.z = Math.sign(bubble.position.z) * bounds.current.depth / 2;
+        }
+
+        // Apply slight upward drift
+        bubble.velocity.y += 0.0001;
+
+        // Add slight wobble
+        bubble.position.x += Math.sin(Date.now() * 0.001 + bubble.position.y) * 0.001;
+        
+        // Update mesh position
+        bubble.mesh.position.copy(bubble.position);
+      });
+
       renderer.render(scene, camera);
     };
     animate();
@@ -147,6 +225,11 @@ export const HeroSection = () => {
       if (containerRef.current && renderer.domElement) {
         containerRef.current.removeChild(renderer.domElement);
       }
+      bubblesRef.current.forEach(bubble => {
+        scene.remove(bubble.mesh);
+        bubble.mesh.geometry.dispose();
+      });
+      bubblesRef.current = [];
     };
   }, []);
 
