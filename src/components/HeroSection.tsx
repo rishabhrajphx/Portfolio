@@ -6,9 +6,9 @@ export const HeroSection = () => {
   const sceneRef = useRef<THREE.Scene | null>(null);
   const cameraRef = useRef<THREE.PerspectiveCamera | null>(null);
   const rendererRef = useRef<THREE.WebGLRenderer | null>(null);
-  const meshRef = useRef<THREE.Mesh | null>(null);
+  const particlesRef = useRef<THREE.Points | null>(null);
   const mousePosition = useRef({ x: 0, y: 0 });
-  const targetRotation = useRef({ x: 0, y: 0 });
+  const centerPoint = new THREE.Vector3(0, 0, 0);
 
   useEffect(() => {
     if (!containerRef.current) return;
@@ -25,16 +25,40 @@ export const HeroSection = () => {
     renderer.setSize(window.innerWidth, window.innerHeight);
     containerRef.current.appendChild(renderer.domElement);
 
-    // Create geometric shapes
-    const geometry = new THREE.IcosahedronGeometry(1, 0);
-    const material = new THREE.MeshPhongMaterial({
+    // Create particle system
+    const particleCount = 1000;
+    const particles = new Float32Array(particleCount * 3);
+    const velocities = new Float32Array(particleCount * 3);
+    
+    for (let i = 0; i < particleCount * 3; i += 3) {
+      // Create particles in a sphere
+      const radius = 1;
+      const theta = Math.random() * Math.PI * 2;
+      const phi = Math.acos((Math.random() * 2) - 1);
+      
+      particles[i] = radius * Math.sin(phi) * Math.cos(theta);
+      particles[i + 1] = radius * Math.sin(phi) * Math.sin(theta);
+      particles[i + 2] = radius * Math.cos(phi);
+      
+      // Initialize velocities
+      velocities[i] = (Math.random() - 0.5) * 0.01;
+      velocities[i + 1] = (Math.random() - 0.5) * 0.01;
+      velocities[i + 2] = (Math.random() - 0.5) * 0.01;
+    }
+
+    const geometry = new THREE.BufferGeometry();
+    geometry.setAttribute('position', new THREE.BufferAttribute(particles, 3));
+    
+    const material = new THREE.PointsMaterial({
       color: 0x84A59D,
-      wireframe: true,
+      size: 0.02,
       transparent: true,
       opacity: 0.7,
+      blending: THREE.AdditiveBlending,
     });
-    meshRef.current = new THREE.Mesh(geometry, material);
-    scene.add(meshRef.current);
+
+    particlesRef.current = new THREE.Points(geometry, material);
+    scene.add(particlesRef.current);
 
     // Add lighting
     const ambientLight = new THREE.AmbientLight(0x404040);
@@ -52,11 +76,6 @@ export const HeroSection = () => {
         x: (event.clientX / window.innerWidth) * 2 - 1,
         y: -(event.clientY / window.innerHeight) * 2 + 1
       };
-      
-      targetRotation.current = {
-        x: mousePosition.current.y * 0.5,
-        y: mousePosition.current.x * 0.5
-      };
     };
 
     // Touch movement handler
@@ -65,11 +84,6 @@ export const HeroSection = () => {
       mousePosition.current = {
         x: (touch.clientX / window.innerWidth) * 2 - 1,
         y: -(touch.clientY / window.innerHeight) * 2 + 1
-      };
-      
-      targetRotation.current = {
-        x: mousePosition.current.y * 0.5,
-        y: mousePosition.current.x * 0.5
       };
     };
 
@@ -80,14 +94,37 @@ export const HeroSection = () => {
     const animate = () => {
       requestAnimationFrame(animate);
       
-      if (meshRef.current) {
-        // Smooth rotation interpolation
-        meshRef.current.rotation.x += (targetRotation.current.x - meshRef.current.rotation.x) * 0.05;
-        meshRef.current.rotation.y += (targetRotation.current.y - meshRef.current.rotation.y) * 0.05;
+      if (particlesRef.current) {
+        const positions = particlesRef.current.geometry.attributes.position.array as Float32Array;
         
-        // Add subtle continuous rotation
-        meshRef.current.rotation.x += 0.001;
-        meshRef.current.rotation.y += 0.001;
+        // Update particle positions
+        for (let i = 0; i < positions.length; i += 3) {
+          // Convert mouse position to 3D space
+          const mouseVector = new THREE.Vector3(
+            mousePosition.current.x * 3,
+            mousePosition.current.y * 3,
+            0
+          );
+          
+          // Calculate forces
+          const particlePos = new THREE.Vector3(positions[i], positions[i + 1], positions[i + 2]);
+          
+          // Force towards center (gravity)
+          const toCenter = centerPoint.clone().sub(particlePos);
+          const centerForce = toCenter.normalize().multiplyScalar(0.001);
+          
+          // Repulsion from mouse
+          const toMouse = mouseVector.clone().sub(particlePos);
+          const distanceToMouse = toMouse.length();
+          const repulsionForce = toMouse.normalize().multiplyScalar(-0.005 / Math.max(0.1, distanceToMouse));
+          
+          // Apply forces
+          positions[i] += centerForce.x + repulsionForce.x + velocities[i];
+          positions[i + 1] += centerForce.y + repulsionForce.y + velocities[i + 1];
+          positions[i + 2] += centerForce.z + repulsionForce.z + velocities[i + 2];
+        }
+        
+        particlesRef.current.geometry.attributes.position.needsUpdate = true;
       }
       
       renderer.render(scene, camera);
