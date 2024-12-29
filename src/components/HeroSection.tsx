@@ -150,13 +150,59 @@ export const HeroSection = () => {
     };
   }, []);
 
+  useEffect(() => {
+    const letters = "!_-+=)(*&^%$#@!1234567890?/>.<:;";
+    let interval = null;
+
+    const h1Element = document.querySelector("h1") as HTMLElement;
+    const originalText = h1Element.dataset.value; // Get the original text
+
+    // Set initial cryptic text
+    h1Element.innerText = Array.from({ length: originalText.length }, () => letters[Math.floor(Math.random() * letters.length)]).join("");
+
+    h1Element.onmouseover = (event: MouseEvent) => {
+      let iteration = 0;
+
+      clearInterval(interval);
+
+      interval = setInterval(() => {
+        h1Element.innerText = h1Element.innerText
+          .split("")
+          .map((letter, index) => {
+            if (index < iteration) {
+              return originalText[index]; // Reveal original text
+            }
+
+            return letters[Math.floor(Math.random() * letters.length)];
+          })
+          .join("");
+
+        if (iteration >= originalText.length) {
+          clearInterval(interval);
+        }
+
+        iteration += 1 / 3;
+      }, 30);
+    };
+
+    return () => {
+      if (h1Element) {
+        h1Element.onmouseover = null; // Clean up the event listener
+      }
+    };
+  }, []);
+
   return (
     <div className="relative h-screen">
       <div ref={containerRef} className="absolute inset-0" />
       <div className="relative z-10 flex h-full items-center justify-center">
         <div className="text-center">
-          <h1 className="animate-fade-in text-4xl font-bold sm:text-5xl md:text-6xl">
-            Crafting Digital Experiences
+          <h1 
+            className="animate-fade-in text-4xl font-bold sm:text-5xl md:text-6xl" 
+            data-value="Rishabh Raj"
+            draggable="false" // Prevent dragging
+          >
+            {/* Initial cryptic text will be set in useEffect */}
           </h1>
           <p className="mt-4 animate-fade-in text-lg text-muted-foreground">
             Developer • Cryptography Enthusiast • Problem Solver
