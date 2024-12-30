@@ -1,5 +1,5 @@
 [build]
-  command = "npm run build"
+  command = "npx serve -s dist"
   publish = ".next"
 
 [[plugins]]
@@ -7,3 +7,8 @@
 
 [build.environment]
   NEXT_USE_NETLIFY_EDGE = "true" 
+
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
