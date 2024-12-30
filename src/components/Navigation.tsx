@@ -24,12 +24,6 @@ export const Navigation = () => {
           Home
         </Link>
         <div className="flex gap-6">
-          <a
-            href="#projects"
-            className="transition-colors hover:text-primary"
-          >
-            Projects
-          </a>
           <Link
             to="/contacts"
             className="transition-colors hover:text-primary"

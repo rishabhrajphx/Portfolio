@@ -1,6 +1,6 @@
 import { HeroSection } from "@/components/HeroSection";
 import { Navigation } from "@/components/Navigation";
-import { ProjectTimeline } from "@/components/ProjectTimeline";
+import { ProjectTimeline } from "@/pages/ProjectTimeline";
 
 const Index = () => {
   return (
