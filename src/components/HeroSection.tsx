@@ -104,7 +104,7 @@ export const HeroSection = () => {
       color: 0xADD8E6,
       transparent: true,
       opacity: 0.6,
-      shininess: 300,
+      shininess: 200,
       specular: 0xffffff,
     });
 
