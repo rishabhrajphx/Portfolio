@@ -10,26 +10,26 @@ interface Project {
 
 const projects: Project[] = [
   {
-    title: "Cryptographic Message System",
-    description: "End-to-end encrypted messaging platform using modern cryptographic algorithms.",
-    date: "2024",
-    link: "#",
-    tags: ["Cryptography", "React", "Node.js"],
+    title: "Hyper Local Socialization App",
+    description: "An app that allows users to find events or activities happening in their area. \n I built this app using Flutter and Firebase.",
+    date: "December 2024",
+    link: "https://github.com/rishabhrajphx/hyperlocal_socialization_app-flutter",
+    tags: ["Firebase", "Flutter", "Dart", "AI"],
   },
   {
-    title: "3D Visualization Tool",
-    description: "Interactive 3D data visualization tool for complex datasets.",
-    date: "2023",
-    link: "#",
-    tags: ["Three.js", "WebGL", "TypeScript"],
+    title: "Java Based Access Control System",
+    description: "An access control system that allows users to manage access to resources based on their roles. \n Built as part of my curriculum with classmates. \n I was the Team Lead and used Agile methodologies to manage the project.",
+    date: "September - November 2024",
+    link: "https://github.com/rishabhrajphx/Java-Access-Control-Software",
+    tags: ["Java", "Spring Boot", "MySQL"],
   },
-  {
-    title: "Blockchain Explorer",
-    description: "A clean and intuitive blockchain explorer for tracking transactions.",
-    date: "2023",
-    link: "#",
-    tags: ["Web3", "React", "GraphQL"],
-  },
+  //{
+    //title: "Blockchain Explorer",
+    //description: "A clean and intuitive blockchain explorer for tracking transactions.",
+    //date: "2023",
+    //link: "#",
+    //tags: ["Web3", "React", "GraphQL"],
+  //},
 ];
 
 export const ProjectTimeline = () => {
