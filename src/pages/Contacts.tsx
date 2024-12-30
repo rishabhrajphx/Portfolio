@@ -1,50 +1,46 @@
-import React from 'react'; // seperate from the contact page for now
+import React from 'react';
+import { Github, Linkedin } from 'lucide-react';
+import { Button } from "@/components/ui/button";
 
 const Contacts = () => {
   return (
-    <div className="flex flex-col items-center justify-center h-screen">
-      <h1 className="text-4xl font-bold">Contact Us</h1>
-      <p className="mt-4 text-lg">We would love to hear from you!</p>
-      <form className="mt-8 w-1/2">
-        <div className="mb-4">
-          <label className="block text-sm font-medium" htmlFor="name">Name</label>
-          <input
-            type="text"
-            id="name"
-            className="mt-1 block w-full border border-gray-300 rounded-md p-2"
-            placeholder="Your Name"
-            required
+    <div className="min-h-screen flex items-center justify-center bg-background">
+      <div className="glass-card p-8 rounded-lg max-w-md w-full mx-4">
+        <div className="flex flex-col items-center space-y-6">
+          <img
+            src="https://images.unsplash.com/photo-1485827404703-89b55fcc595e"
+            alt="Profile Picture"
+            className="w-32 h-32 rounded-full object-cover border-2 border-primary"
           />
+          
+          <h1 className="text-2xl font-bold">Your Name</h1>
+          <p className="text-muted-foreground text-center">
+            Cryptography enthusiast & Software Developer
+          </p>
+
+          <div className="flex flex-col w-full gap-4">
+            <Button
+              variant="outline"
+              className="w-full"
+              onClick={() => window.open('https://github.com/yourusername', '_blank')}
+            >
+              <Github className="mr-2" />
+              GitHub
+            </Button>
+            
+            <Button
+              variant="outline"
+              className="w-full"
+              onClick={() => window.open('https://linkedin.com/in/yourusername', '_blank')}
+            >
+              <Linkedin className="mr-2" />
+              LinkedIn
+            </Button>
+          </div>
         </div>
-        <div className="mb-4">
-          <label className="block text-sm font-medium" htmlFor="email">Email</label>
-          <input
-            type="email"
-            id="email"
-            className="mt-1 block w-full border border-gray-300 rounded-md p-2"
-            placeholder="Your Email"
-            required
-          />
-        </div>
-        <div className="mb-4">
-          <label className="block text-sm font-medium" htmlFor="message">Message</label>
-          <textarea
-            id="message"
-            className="mt-1 block w-full border border-gray-300 rounded-md p-2"
-            rows={4}
-            placeholder="Your Message"
-            required
-          />
-        </div>
-        <button
-          type="submit"
-          className="w-full bg-blue-500 text-white font-bold py-2 rounded-md hover:bg-blue-600"
-        >
-          Send Message
-        </button>
-      </form>
+      </div>
     </div>
   );
 };
 
-export default Contacts; 
+export default Contacts;

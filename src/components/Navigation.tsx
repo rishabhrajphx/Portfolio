@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 
 export const Navigation = () => {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -19,9 +20,9 @@ export const Navigation = () => {
       }`}
     >
       <div className="container mx-auto flex items-center justify-between px-4">
-        <a href="#" className="text-xl font-bold">
+        <Link to="/" className="text-xl font-bold">
           Portfolio
-        </a>
+        </Link>
         <div className="flex gap-6">
           <a
             href="#projects"
@@ -29,12 +30,12 @@ export const Navigation = () => {
           >
             Projects
           </a>
-          <a
-            href="#contact"
+          <Link
+            to="/contacts"
             className="transition-colors hover:text-primary"
           >
             Contact
-          </a>
+          </Link>
         </div>
       </div>
     </nav>
