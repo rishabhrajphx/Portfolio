@@ -21,7 +21,7 @@ export const Navigation = () => {
     >
       <div className="container mx-auto flex items-center justify-between px-4">
         <Link to="/" className="text-xl font-bold">
-          Portfolio
+          Home
         </Link>
         <div className="flex gap-6">
           <a

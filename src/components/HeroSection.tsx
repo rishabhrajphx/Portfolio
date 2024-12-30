@@ -24,7 +24,7 @@ export const HeroSection = () => {
 
     // Scene setup
     sceneRef.current = new THREE.Scene();
-    cameraRef.current = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+    cameraRef.current = new THREE.PerspectiveCamera(50, window.innerWidth / window.innerHeight, 0.1, 1000);
     rendererRef.current = new THREE.WebGLRenderer({ alpha: true });
     
     const scene = sceneRef.current;
@@ -288,7 +288,7 @@ export const HeroSection = () => {
             {/* Initial cryptic text will be set in useEffect */}
           </h1>
           <p className="mt-4 animate-fade-in text-lg text-muted-foreground">
-            Developer • Cryptography Enthusiast • Problem Solver
+            Software Developer • Cryptography Enthusiast • Problem Solver
           </p>
         </div>
       </div>
