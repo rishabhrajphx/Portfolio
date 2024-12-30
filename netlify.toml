@@ -1,12 +1,13 @@
 [build]
-  command = "npx serve -s dist"
-  publish = ".next"
+  command = "npm run build"
+  publish = "out"
+  base = "/"
 
 [[plugins]]
   package = "@netlify/plugin-nextjs"
 
 [build.environment]
-  NEXT_USE_NETLIFY_EDGE = "true" 
+  NEXT_USE_NETLIFY_EDGE = "true"
 
 [[redirects]]
   from = "/*"
