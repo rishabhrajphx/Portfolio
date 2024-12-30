@@ -207,6 +207,20 @@ export const HeroSection = () => {
           bubble.position.z = Math.sign(bubble.position.z) * bounds.current.depth / 2;
         }
 
+        // Bounce away from mouse cursor
+        const mouseVector = new THREE.Vector3(
+          mousePosition.current.x * bounds.current.width / 2,
+          mousePosition.current.y * bounds.current.height / 2,
+          0
+        );
+        const distanceToMouse = bubble.position.distanceTo(mouseVector);
+        const bounceThreshold = 0.5; // Distance threshold for bouncing
+
+        if (distanceToMouse < bounceThreshold) {
+          const toMouse = mouseVector.clone().sub(bubble.position).normalize();
+          bubble.velocity.add(toMouse.multiplyScalar(0.05)); // Adjust bounce strength
+        }
+
         // Apply slight upward drift
         bubble.velocity.y += 0.0001;
 
