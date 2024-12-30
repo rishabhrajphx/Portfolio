@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, BrowserRouter as Router, BrowserRouter } from 'react-router-dom';
 
 export const Navigation = () => {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -35,3 +35,11 @@ export const Navigation = () => {
     </nav>
   );
 };
+
+function App() {
+  return (
+    <BrowserRouter basename="/">
+      <Navigation />
+    </BrowserRouter>
+  );
+}
