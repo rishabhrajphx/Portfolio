@@ -35,19 +35,15 @@ export const HeroSection = () => {
     containerRef.current.appendChild(renderer.domElement);
 
     // Create particle system
-    const particleCount = 1000;
+    const particleCount = 2000;
     const particles = new Float32Array(particleCount * 3);
     const velocities = new Float32Array(particleCount * 3);
     
-    for (let i = 0; i < particleCount * 10; i += 3) {
-      // Create particles in a sphere
-      const radius = 1;
-      const theta = Math.random() * Math.PI * 2;
-      const phi = Math.acos((Math.random() * 2) - 1);
-      
-      particles[i] = radius * Math.sin(phi) * Math.cos(theta);
-      particles[i + 1] = radius * Math.sin(phi) * Math.sin(theta);
-      particles[i + 2] = radius * Math.cos(phi);
+    for (let i = 0; i < particleCount * 3; i += 3) {
+      // Create particles in a cube shape instead of sphere
+      particles[i] = (Math.random() - 0.5) * 2; // x
+      particles[i + 1] = (Math.random() - 0.5) * 2; // y
+      particles[i + 2] = (Math.random() - 0.5) * 2; // z
       
       // Initialize velocities
       velocities[i] = (Math.random() - 0.5) * 0.01;
@@ -60,11 +56,27 @@ export const HeroSection = () => {
     
     const material = new THREE.PointsMaterial({
       color: 0x84A59D,
-      size: 0.02,
+      size: 0.04,
       transparent: true,
-      opacity: 0.7,
+      opacity: 0.9,
       blending: THREE.AdditiveBlending,
+      map: createCubeTexture(),
     });
+
+    // Helper function to create cube texture
+    function createCubeTexture() {
+      const canvas = document.createElement('canvas');
+      canvas.width = 128;
+      canvas.height = 128;
+      const context = canvas.getContext('2d');
+      if (!context) return null;
+
+      // Draw a filled square
+      context.fillStyle = '#ffffff';
+      context.fillRect(0, 0, 128, 128);
+
+      return new THREE.CanvasTexture(canvas);
+    }
 
     particlesRef.current = new THREE.Points(geometry, material);
     scene.add(particlesRef.current);
