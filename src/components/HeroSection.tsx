@@ -1,5 +1,6 @@
 import { useEffect, useRef } from 'react';
 import * as THREE from 'three';
+import { ChevronDown } from 'lucide-react';
 
 interface Bubble {
   position: THREE.Vector3;
@@ -55,7 +56,7 @@ export const HeroSection = () => {
     geometry.setAttribute('position', new THREE.BufferAttribute(particles, 3));
     
     const material = new THREE.PointsMaterial({
-      color: 0x84A59D,
+      color: 0xFFD700,
       size: 0.04,
       transparent: true,
       opacity: 0.9,
@@ -113,11 +114,11 @@ export const HeroSection = () => {
 
     // Create bubble material
     const bubbleMaterial = new THREE.MeshPhongMaterial({
-      color: 0x4169E1,
+      color: 0x800000,
       transparent: true,
       opacity: 0.6,
       shininess: 200,
-      specular: 0xffffff,
+      specular: 0xC0C0C0,
     });
 
     // Create bubbles
@@ -301,6 +302,13 @@ export const HeroSection = () => {
     };
   }, []);
 
+  const scrollToBottom = () => {
+    window.scrollTo({
+      top: document.documentElement.scrollHeight,
+      behavior: 'smooth'
+    });
+  };
+
   return (
     <div className="relative h-screen">
       <div ref={containerRef} className="absolute inset-0" />
@@ -309,7 +317,7 @@ export const HeroSection = () => {
           <h1 
             className="animate-fade-in text-4xl font-bold sm:text-5xl md:text-6xl" 
             data-value="Rishabh Raj"
-            draggable="false" // Prevent dragging
+            draggable="false"
           >
             {/* Initial cryptic text will be set in useEffect */}
           </h1>
@@ -318,6 +326,14 @@ export const HeroSection = () => {
           </p>
         </div>
       </div>
+
+      <button 
+        onClick={scrollToBottom}
+        className="fixed bottom-8 right-8 z-50 rounded-full bg-primary p-3 text-primary-foreground shadow-lg transition-all hover:bg-primary/90 hover:shadow-xl animate-bounce"
+        aria-label="Scroll to bottom"
+      >
+        <ChevronDown className="h-6 w-6" />
+      </button>
     </div>
   );
 };
