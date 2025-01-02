@@ -6,3 +6,5 @@ To run:
 To deploy from terminal:
 > sudo netlify deploy
 > sudo netlify deploy --prod
+
+Figure out how to reduce the size of /assets/index*.js files. and how to allow it to auto update.
