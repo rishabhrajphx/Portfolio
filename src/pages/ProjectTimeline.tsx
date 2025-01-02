@@ -9,6 +9,12 @@ interface Project {
 }
 
 const projects: Project[] = [
+  {title: "Rishabh Raj Portfolio Website",
+    description: ".",
+    date: "2025",
+    link: "rishabhraj.net",
+    tags: ["TypeScript", "React", "Three.js"],
+  },
   {
     title: "Hyper Local Socialization App",
     description: "An app that allows users to find events or activities happening in their area. \n I built this app using Flutter and Firebase.",
