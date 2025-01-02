@@ -10,7 +10,7 @@ interface Project {
 
 const projects: Project[] = [
   {title: "Rishabh Raj Portfolio Website",
-    description: ".",
+    description: "I built this website to showcase my projects and skills.",
     date: "2025",
     link: "rishabhraj.net",
     tags: ["TypeScript", "React", "Three.js"],
