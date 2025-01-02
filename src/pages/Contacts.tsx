@@ -28,7 +28,7 @@ const Contacts = () => {
             {/* Profile Image */}
             <div className="w-24 h-24 rounded-full overflow-hidden border-2 border-maroon shadow-lg">
               <img 
-                src="/public/photo.png" 
+                src="/profile.png" 
                 alt="Profile" 
                 className="w-full h-full object-cover"
               />

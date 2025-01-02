@@ -19,7 +19,12 @@ export default {
       borderColor: {
         DEFAULT: "hsl(var(--border))",
       },
+      aspectRatio: {
+        '1/1.75': '1 / 1.75',
+      },
     },
   },
-  plugins: [],
+  plugins: [
+    require('@tailwindcss/aspect-ratio'),
+  ],
 } 
