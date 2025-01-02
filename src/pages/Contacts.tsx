@@ -1,10 +1,15 @@
 import { useState } from 'react';
 import { Github, Linkedin, Mail, Phone } from 'lucide-react';
+import { Navigation } from '../components/Navigation';
+
 
 const Contacts = () => {
   const [isFlipped, setIsFlipped] = useState(false);
 
+  
   return (
+    <>
+    <Navigation />
     <div className="min-h-screen flex items-center justify-center bg-slate-100">
       <div 
         className={`w-[700px] h-[500px] cursor-pointer transition-all duration-500 [transform-style:preserve-3d] ${
@@ -14,7 +19,7 @@ const Contacts = () => {
       >
         {/* Front of Card */}
         <div className="absolute w-full h-full [backface-visibility:hidden]
-          rounded-xl p-6
+          rounded-xl p-12
           bg-gradient-to-br from-gray-200 via-gray-100 to-gray-300
           shadow-[0_8px_16px_rgba(0,0,0,0.2),inset_0_2px_4px_rgba(255,255,255,0.8)]
           border border-gray-300"
@@ -44,7 +49,7 @@ const Contacts = () => {
             </div>
             <div className="flex items-center gap-2 text-sm text-gray-700">
               <Phone className="w-4 h-4 text-maroon" />
-              <span>+1 234 567 8900</span>
+              <span>+1 (623) 280-8705</span>
             </div>
           </div>
 
@@ -94,6 +99,7 @@ const Contacts = () => {
         </div>
       </div>
     </div>
+    </>
   );
 };
 
