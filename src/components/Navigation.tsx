@@ -15,8 +15,8 @@ export const Navigation = () => {
 
   return (
     <nav
-      className={`fixed left-0 right-0 top-0 z-50 transition-all duration-300 ${
-        isScrolled ? 'glass-card py-4' : 'py-6'
+      className={`fixed left-0 right-0 top-0 z-50 transition-all duration-300 backdrop-blur-md ${
+        isScrolled ? 'bg-white/30 py-4' : 'bg-white/50 py-6'
       }`}
     >
       <div className="container mx-auto flex items-center justify-between px-4">

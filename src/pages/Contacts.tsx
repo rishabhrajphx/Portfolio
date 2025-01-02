@@ -45,11 +45,15 @@ const Contacts = () => {
           <div className="mt-6 space-y-2">
             <div className="flex items-center gap-2 text-base text-gray-700">
               <Mail className="w-4 h-4 text-maroon" />
-              <span>raj@rishabhraj.net</span>
+              <a href="mailto:raj@rishabhraj.net" className="hover:underline">
+                raj@rishabhraj.net
+              </a>
             </div>
             <div className="flex items-center gap-2 text-base text-gray-700">
               <Phone className="w-4 h-4 text-maroon" />
-              <span>+1 (623) 280-8705</span>
+              <a href="tel:+16232808705" className="hover:underline">
+                +1 (623) 280-8705
+              </a>
             </div>
           </div>
 
