@@ -5,4 +5,4 @@ To run:
 
 To deploy from terminal:
 > sudo netlify deploy
-> netlify deploy --prod
+> sudo netlify deploy --prod
