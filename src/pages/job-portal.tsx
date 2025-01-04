@@ -54,7 +54,7 @@ const JobApplicationPortal = () => {
     <div className="max-w-4xl mx-auto px-6 py-12 bg-white min-h-screen">
       <Navigation />
       <h1 className="text-4xl font-medium text-gray-900 mb-8 mt-8">
-         Job Application
+         Job Application (In Progress)
       </h1>
 
       {/* Resume Upload Section */}
@@ -198,7 +198,7 @@ const JobApplicationPortal = () => {
         </div>
       </div>
 
-      <button className="w-full bg-blue-600 text-white py-4 px-6 rounded-xl hover:bg-blue-700 transition-colors duration-200 font-medium text-lg">
+      <button className="w-full bg-black-600 text-white py-4 px-6 rounded-xl hover:bg-blue-700 transition-colors duration-200 font-medium text-lg">
         Submit Application
       </button>
     </div>

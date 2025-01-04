@@ -49,12 +49,7 @@ const Contacts = () => {
                 raj@rishabhraj.net
               </a>
             </div>
-            <div className="flex items-center gap-2 text-base text-gray-700">
-              <Phone className="w-4 h-4 text-maroon" />
-              <a href="tel:+16232808705" className="hover:underline">
-                +1 (623) 280-8705
-              </a>
-            </div>
+            
           </div>
 
           <div className="absolute bottom-4 right-4 text-xs text-gray-400">
