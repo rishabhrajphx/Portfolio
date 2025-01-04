@@ -3,6 +3,7 @@ import { Navigation } from '../components/Navigation';
 
 const JobApplicationPortal = () => {
   const [resumeFile, setResumeFile] = useState<File | null>(null);
+  const [resumeFileName, setResumeFileName] = useState<string | null>(null);
   const [formData, setFormData] = useState({
     firstName: '',
     lastName: '',
@@ -30,7 +31,7 @@ const JobApplicationPortal = () => {
     const file = event.target.files?.[0];
     if (file) {
       setResumeFile(file);
-      // Placeholder for resume parsing logic
+      setResumeFileName(file.name);
       console.log('File uploaded:', file.name);
     }
   };
@@ -147,6 +148,9 @@ const JobApplicationPortal = () => {
             <span className="text-sm text-gray-500 mt-2">Supports PDF, DOCX</span>
           </label>
         </div>
+        {resumeFileName && (
+          <p className="mt-2 text-gray-700">Uploaded file: {resumeFileName}</p>
+        )}
       </div>
 
       {/* Personal Information Section */}
