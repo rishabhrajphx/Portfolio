@@ -1,8 +1,10 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { Link, BrowserRouter as Router, BrowserRouter } from 'react-router-dom';
 
 export const Navigation = () => {
   const [isScrolled, setIsScrolled] = useState(false);
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const dropdownRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -11,6 +13,20 @@ export const Navigation = () => {
 
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
+  // Close dropdown when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
+        setIsDropdownOpen(false);
+      }
+    };
+
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
   }, []);
 
   return (
@@ -24,6 +40,24 @@ export const Navigation = () => {
           Home
         </Link>
         <div className="flex gap-6">
+          <div className="relative" ref={dropdownRef}>
+            <span
+              className="cursor-pointer transition-colors hover:text-primary"
+              onClick={() => setIsDropdownOpen(!isDropdownOpen)}
+            >
+              Web Projects
+            </span>
+            {isDropdownOpen && (
+              <div className="absolute left-0 top-full mt-2 bg-white rounded-lg shadow-lg py-2 min-w-[200px]">
+                <Link
+                  to="/job-portal"
+                  className="block px-4 py-2 hover:bg-gray-100 transition-colors"
+                >
+                  Job Application Portal
+                </Link>
+              </div>
+            )}
+          </div>
           <Link
             to="/contacts"
             className="transition-colors hover:text-primary"
