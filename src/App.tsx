@@ -7,6 +7,7 @@ import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import Index from "./pages/Index";
 import Contacts from "./pages/Contacts";
 import JobPortal from './pages/job-portal';
+import { DarkModeProvider } from 'src/context/DarkModeContext';
 
 const queryClient = new QueryClient();
 

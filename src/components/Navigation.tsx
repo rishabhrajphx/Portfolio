@@ -1,7 +1,9 @@
 import { useState, useEffect, useRef } from 'react';
 import { Link, BrowserRouter as Router, BrowserRouter } from 'react-router-dom';
+import { useDarkMode } from '../context/DarkModeContext';
 
 export const Navigation = () => {
+  const { darkMode, toggleDarkMode } = useDarkMode();
   const [isScrolled, setIsScrolled] = useState(false);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
@@ -65,6 +67,12 @@ export const Navigation = () => {
             Contact
           </Link>
         </div>
+        <button
+          onClick={toggleDarkMode}
+          className="p-2 rounded-lg bg-gray-200 dark:bg-gray-700"
+        >
+          {darkMode ? '☀️' : '🌙'}
+        </button>
       </div>
     </nav>
   );
