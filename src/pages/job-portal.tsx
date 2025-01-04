@@ -234,7 +234,7 @@ const JobApplicationPortal = () => {
         </div>
       </div>
 
-      <button className="w-full bg-black-600 text-white py-4 px-6 rounded-xl hover:bg-blue-700 transition-colors duration-200 font-medium text-lg">
+      <button className="w-full bg-gray-300 text-black py-4 px-6 rounded-xl hover:bg-black hover:text-white transition-colors duration-200 font-medium text-lg">
         Submit Application
       </button>
     </div>
