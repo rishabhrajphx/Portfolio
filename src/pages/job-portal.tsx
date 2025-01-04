@@ -22,6 +22,8 @@ const JobApplicationPortal = () => {
     veteranStatus: '',
   });
 
+  const [emailError, setEmailError] = useState<string | null>(null);
+
   // Handle file upload
   const handleFileUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
@@ -35,13 +37,39 @@ const JobApplicationPortal = () => {
   // Handle input change for form fields
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
+    
     setFormData((prev) => ({ ...prev, [name]: value }));
+
+    // Clear the error when the user types
+    if (name === 'email') {
+      setEmailError(null);
+    }
+  };
+
+  // Handle email validation on blur
+  const handleEmailBlur = () => {
+    const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailPattern.test(formData.email)) {
+      setEmailError('Please enter a valid email address.');
+    } else {
+      setEmailError(null); // Clear error if valid
+    }
   };
 
   // Handle cover letter questions
   const handleCoverLetterChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     const { name, value } = e.target;
-    setCoverLetterAnswers((prev) => ({ ...prev, [name]: value }));
+
+    // Count words in the input
+    const wordCount = value.trim().split(/\s+/).length;
+
+    // Check if the word count exceeds 300
+    if (wordCount <= 300) {
+      setCoverLetterAnswers((prev) => ({ ...prev, [name]: value }));
+    } else {
+      // Optionally, you can show an alert or a message to the user
+      console.log('Word limit exceeded. Please limit to 300 words.');
+    }
   };
 
   // Handle equal opportunity questions
@@ -117,9 +145,11 @@ const JobApplicationPortal = () => {
               name="email"
               value={formData.email}
               onChange={handleInputChange}
-              className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 outline-none"
+              onBlur={handleEmailBlur}
+              className={`w-full px-4 py-3 rounded-xl border ${emailError ? 'border-red-500' : 'border-gray-200'} focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 outline-none`}
               placeholder="your@email.com"
             />
+            {emailError && <p className="text-red-500 text-sm mt-1">{emailError}</p>}
           </div>
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-2">Phone</label>
@@ -148,6 +178,9 @@ const JobApplicationPortal = () => {
               className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 outline-none min-h-[120px]"
               placeholder="Share your most significant professional achievements..."
             />
+            <p className="text-sm text-gray-500">
+              {coverLetterAnswers.achievements.trim().split(/\s+/).length} / 300 words
+            </p>
           </div>
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-2">Motivation</label>
@@ -158,6 +191,9 @@ const JobApplicationPortal = () => {
               className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 outline-none min-h-[120px]"
               placeholder="What drives you to apply for this position?"
             />
+            <p className="text-sm text-gray-500">
+              {coverLetterAnswers.motivation.trim().split(/\s+/).length} / 300 words
+            </p>
           </div>
         </div>
       </div>
