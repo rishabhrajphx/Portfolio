@@ -23,6 +23,7 @@ const JobApplicationPortal = () => {
   });
 
   const [emailError, setEmailError] = useState<string | null>(null);
+  const [phoneError, setPhoneError] = useState<string | null>(null);
 
   // Handle file upload
   const handleFileUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -38,12 +39,51 @@ const JobApplicationPortal = () => {
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
     
-    setFormData((prev) => ({ ...prev, [name]: value }));
+    // Format phone number
+    if (name === 'phone') {
+      // Remove all non-digit characters
+      const cleanedValue = value.replace(/\D/g, '');
+
+      // Prevent further input if more than 10 digits
+      if (cleanedValue.length > 10) {
+        return;
+      }
+
+      // Format the cleaned value
+      const formattedValue = formatPhoneNumber(cleanedValue);
+      setFormData((prev) => ({ ...prev, [name]: formattedValue }));
+
+      // Validate phone number
+      if (!validatePhoneNumber(formattedValue)) {
+        setPhoneError('Please enter a valid phone number.');
+      } else {
+        setPhoneError(null); // Clear error if valid
+      }
+    } else {
+      setFormData((prev) => ({ ...prev, [name]: value }));
+    }
 
     // Clear the error when the user types
     if (name === 'email') {
       setEmailError(null);
     }
+  };
+
+  // Function to format phone number
+  const formatPhoneNumber = (value: string) => {
+    const match = value.match(/^(\d{0,3})(\d{0,3})(\d{0,4})$/);
+    if (match) {
+      // Construct the formatted phone number
+      const formatted = `${match[1] ? `(${match[1]})` : ''} ${match[2]}${match[3] ? '-' + match[3] : ''}`.trim();
+      return formatted.trim();
+    }
+    return value;
+  };
+
+  // Function to validate phone number
+  const validatePhoneNumber = (value: string) => {
+    const phonePattern = /^\(\d{3}\) \d{3}-\d{4}$/; // Matches (123) 456-7890
+    return phonePattern.test(value);
   };
 
   // Handle email validation on blur
@@ -158,9 +198,10 @@ const JobApplicationPortal = () => {
               name="phone"
               value={formData.phone}
               onChange={handleInputChange}
-              className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 outline-none"
+              className={`w-full px-4 py-3 rounded-xl border ${phoneError ? 'border-red-500' : 'border-gray-200'} focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 outline-none`}
               placeholder="(123) 456-7890"
             />
+            {phoneError && <p className="text-red-500 text-sm mt-1">{phoneError}</p>}
           </div>
         </div>
       </div>
