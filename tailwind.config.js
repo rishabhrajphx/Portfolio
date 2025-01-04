@@ -6,6 +6,9 @@ export default {
   ],
   theme: {
     extend: {
+      fontFamily: {
+        sans: ['-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'Roboto', 'Helvetica Neue', 'Arial', 'sans-serif'],
+      },
       colors: {
         border: "hsl(var(--border))",
         maroon: '#800000',
@@ -14,6 +17,11 @@ export default {
         primary: {
           DEFAULT: "hsl(var(--primary))",
           foreground: "hsl(var(--primary-foreground))",
+        },
+        blue: {
+          500: '#0070F3',
+          600: '#0051F3',
+          700: '#003DD1',
         },
       },
       borderColor: {
@@ -25,6 +33,7 @@ export default {
     },
   },
   plugins: [
+    require('@tailwindcss/forms'),
     ('@tailwindcss/aspect-ratio'),
   ],
 }

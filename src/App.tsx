@@ -6,7 +6,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import Index from "./pages/Index";
 import Contacts from "./pages/Contacts";
-import { JobPortal } from './pages/job-portal';
+import JobPortal from './pages/job-portal';
 
 const queryClient = new QueryClient();
 

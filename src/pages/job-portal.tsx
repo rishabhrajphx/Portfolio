@@ -1,146 +1,208 @@
-import { useState, useCallback } from 'react';
-import { useDropzone } from 'react-dropzone';
-import * as pdfjs from 'pdfjs-dist';
-import mammoth from 'mammoth';
-import { extractDocxText, extractPdfText } from '@/utils/resumeParser';
-import { parseResumeText } from '@/utils/resumeParser';
+import React, { useState } from 'react';
 
-interface FormData {
-  firstName: string;
-  lastName: string;
-  email: string;
-  phone: string;
-  address: string;
-  achievements: string;
-  motivation: string;
-  demographics: {
-    veteran: boolean;
-    disability: boolean;
-    gender: string;
-    ethnicity: string;
-  };
-}
-
-export const JobPortal = () => {
-  const [formData, setFormData] = useState<FormData>({
+const JobApplicationPortal = () => {
+  const [resumeFile, setResumeFile] = useState<File | null>(null);
+  const [formData, setFormData] = useState({
     firstName: '',
     lastName: '',
     email: '',
     phone: '',
     address: '',
+  });
+
+  const [coverLetterAnswers, setCoverLetterAnswers] = useState({
     achievements: '',
     motivation: '',
-    demographics: {
-      veteran: false,
-      disability: false,
-      gender: '',
-      ethnicity: '',
-    },
   });
 
-  const updateFormData = (extractedData: Partial<FormData>) => {
-    setFormData(prev => ({ ...prev, ...extractedData }));
+  const [equalOpportunityData, setEqualOpportunityData] = useState({
+    gender: '',
+    ethnicity: '',
+    veteranStatus: '',
+  });
+
+  // Handle file upload
+  const handleFileUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
+    if (file) {
+      setResumeFile(file);
+      // Placeholder for resume parsing logic
+      console.log('File uploaded:', file.name);
+    }
   };
 
-  const onDrop = useCallback(async (acceptedFiles: File[]) => {
-    const file = acceptedFiles[0];
-    
-    try {
-      if (file.type === 'application/pdf') {
-        const text = await extractPdfText(file);
-        const extractedData = parseResumeText(text);
-        updateFormData(extractedData);
-      } else if (file.type === 'application/vnd.openxmlformats-officedocument.wordprocessingml.document') {
-        const text = await extractDocxText(file);
-        const extractedData = parseResumeText(text);
-        updateFormData(extractedData);
-      }
-    } catch (error) {
-      console.error('Error processing file:', error);
-    }
-  }, []);
+  // Handle input change for form fields
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    const { name, value } = e.target;
+    setFormData((prev) => ({ ...prev, [name]: value }));
+  };
 
-  const { getRootProps, getInputProps, isDragActive } = useDropzone({
-    onDrop,
-    accept: {
-      'application/pdf': ['.pdf'],
-      'application/vnd.openxmlformats-officedocument.wordprocessingml.document': ['.docx'],
-    },
-  });
+  // Handle cover letter questions
+  const handleCoverLetterChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+    const { name, value } = e.target;
+    setCoverLetterAnswers((prev) => ({ ...prev, [name]: value }));
+  };
+
+  // Handle equal opportunity questions
+  const handleEqualOpportunityChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    const { name, value } = e.target;
+    setEqualOpportunityData((prev) => ({ ...prev, [name]: value }));
+  };
 
   return (
-    <div className="container mx-auto px-4 py-8">
-      <h1 className="text-2xl font-bold mb-6">Job Application Portal</h1>
-      
+    <div className="max-w-4xl mx-auto px-6 py-12 bg-white min-h-screen">
+      <h1 className="text-4xl font-medium text-gray-900 mb-8">
+        Job Application
+      </h1>
+
       {/* Resume Upload Section */}
-      <div
-        {...getRootProps()}
-        className={`border-2 border-dashed rounded-lg p-8 mb-6 text-center
-          ${isDragActive ? 'border-primary bg-primary/10' : 'border-gray-300'}`}
-      >
-        <input {...getInputProps()} />
-        <p>Drag and drop your resume here, or click to select file</p>
-        <p className="text-sm text-gray-500 mt-2">Supported formats: PDF, DOCX</p>
+      <div className="mb-12 bg-gray-50 rounded-2xl p-8 hover:bg-gray-100 transition-colors duration-200">
+        <label className="text-lg text-gray-700 mb-4 block">Resume Upload</label>
+        <div className="border-2 border-dashed border-gray-300 rounded-xl p-8 text-center">
+          <input
+            type="file"
+            accept=".pdf,.docx"
+            onChange={handleFileUpload}
+            className="hidden"
+            id="resume-upload"
+          />
+          <label 
+            htmlFor="resume-upload"
+            className="cursor-pointer flex flex-col items-center"
+          >
+            <svg className="w-12 h-12 text-gray-400 mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12" />
+            </svg>
+            <span className="text-gray-600">Drop your resume here or click to browse</span>
+            <span className="text-sm text-gray-500 mt-2">Supports PDF, DOCX</span>
+          </label>
+        </div>
       </div>
 
-      {/* Personal Information Form */}
-      <form className="space-y-6">
-        <div className="grid grid-cols-2 gap-4">
-          <input
-            type="text"
-            value={formData.firstName}
-            onChange={(e) => setFormData({ ...formData, firstName: e.target.value })}
-            placeholder="First Name"
-            className="input-field"
-          />
-          {/* Add other personal information fields */}
-        </div>
-
-        {/* Cover Letter Questions */}
-        <div className="space-y-4">
-          <h2 className="text-xl font-semibold">Professional Background</h2>
-          <textarea
-            value={formData.achievements}
-            onChange={(e) => setFormData({ ...formData, achievements: e.target.value })}
-            placeholder="What are your key achievements in your career so far?"
-            className="input-field h-32"
-          />
-          <textarea
-            value={formData.motivation}
-            onChange={(e) => setFormData({ ...formData, motivation: e.target.value })}
-            placeholder="Why are you interested in this position?"
-            className="input-field h-32"
-          />
-        </div>
-
-        {/* Equal Opportunity Section */}
-        <div className="space-y-4">
-          <h2 className="text-xl font-semibold">Equal Opportunity Information</h2>
-          <div className="space-y-2">
-            <label className="flex items-center space-x-2">
-              <input
-                type="checkbox"
-                checked={formData.demographics.veteran}
-                onChange={(e) => setFormData({
-                  ...formData,
-                  demographics: { ...formData.demographics, veteran: e.target.checked }
-                })}
-              />
-              <span>Are you a veteran?</span>
-            </label>
-            {/* Add other demographic questions */}
+      {/* Personal Information Section */}
+      <div className="space-y-8 mb-12">
+        <h2 className="text-2xl font-medium text-gray-900">Personal Information</h2>
+        <div className="grid grid-cols-2 gap-6">
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-2">First Name</label>
+            <input
+              type="text"
+              name="firstName"
+              value={formData.firstName}
+              onChange={handleInputChange}
+              className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 outline-none"
+              placeholder="Enter your first name"
+            />
+          </div>
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-2">Last Name</label>
+            <input
+              type="text"
+              name="lastName"
+              value={formData.lastName}
+              onChange={handleInputChange}
+              className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 outline-none"
+              placeholder="Enter your last name"
+            />
           </div>
         </div>
 
-        <button
-          type="submit"
-          className="bg-primary text-white px-6 py-2 rounded-lg hover:bg-primary/90 transition-colors"
-        >
-          Submit Application
-        </button>
-      </form>
+        <div className="grid grid-cols-2 gap-6">
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-2">Email</label>
+            <input
+              type="email"
+              name="email"
+              value={formData.email}
+              onChange={handleInputChange}
+              className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 outline-none"
+              placeholder="your@email.com"
+            />
+          </div>
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-2">Phone</label>
+            <input
+              type="tel"
+              name="phone"
+              value={formData.phone}
+              onChange={handleInputChange}
+              className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 outline-none"
+              placeholder="(123) 456-7890"
+            />
+          </div>
+        </div>
+      </div>
+
+      {/* Cover Letter Section */}
+      <div className="space-y-8 mb-12">
+        <h2 className="text-2xl font-medium text-gray-900">Professional Background</h2>
+        <div className="space-y-6">
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-2">Key Achievements</label>
+            <textarea
+              name="achievements"
+              value={coverLetterAnswers.achievements}
+              onChange={handleCoverLetterChange}
+              className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 outline-none min-h-[120px]"
+              placeholder="Share your most significant professional achievements..."
+            />
+          </div>
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-2">Motivation</label>
+            <textarea
+              name="motivation"
+              value={coverLetterAnswers.motivation}
+              onChange={handleCoverLetterChange}
+              className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 outline-none min-h-[120px]"
+              placeholder="What drives you to apply for this position?"
+            />
+          </div>
+        </div>
+      </div>
+
+      {/* Equal Opportunity Section */}
+      <div className="space-y-8 mb-12">
+        <h2 className="text-2xl font-medium text-gray-900">Equal Opportunity</h2>
+        <div className="grid grid-cols-2 gap-6">
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-2">Gender</label>
+            <select
+              name="gender"
+              value={equalOpportunityData.gender}
+              onChange={handleEqualOpportunityChange}
+              className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 outline-none appearance-none bg-white"
+            >
+              <option value="">Select gender</option>
+              <option value="male">Male</option>
+              <option value="female">Female</option>
+              <option value="nonBinary">Non-Binary</option>
+              <option value="preferNotToSay">Prefer not to say</option>
+            </select>
+          </div>
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-2">Veteran Status</label>
+            <select
+              name="veteranStatus"
+              value={equalOpportunityData.veteranStatus}
+              onChange={handleEqualOpportunityChange}
+              className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 outline-none appearance-none bg-white"
+            >
+              <option value="">Select status</option>
+              <option value="veteran">Veteran</option>
+              <option value="nonVeteran">Non-Veteran</option>
+              <option value="preferNotToSay">Prefer not to say</option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <button className="w-full bg-blue-600 text-white py-4 px-6 rounded-xl hover:bg-blue-700 transition-colors duration-200 font-medium text-lg">
+        Submit Application
+      </button>
     </div>
   );
 };
+
+export default JobApplicationPortal;
 
 
