@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Navigation } from '../components/Navigation';
 
 const JobApplicationPortal = () => {
   const [resumeFile, setResumeFile] = useState<File | null>(null);
@@ -51,8 +52,9 @@ const JobApplicationPortal = () => {
 
   return (
     <div className="max-w-4xl mx-auto px-6 py-12 bg-white min-h-screen">
-      <h1 className="text-4xl font-medium text-gray-900 mb-8">
-        Job Application
+      <Navigation />
+      <h1 className="text-4xl font-medium text-gray-900 mb-8 mt-8">
+         Job Application
       </h1>
 
       {/* Resume Upload Section */}
