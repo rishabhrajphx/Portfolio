@@ -12,7 +12,7 @@ const projects: Project[] = [
   {title: "Rishabh Raj Portfolio Website",
     description: "I built this website to showcase my projects and skills.",
     date: "2025",
-    link: "",
+    link: "https://github.com/rishabhrajphx/Portfolio",
     tags: ["TypeScript", "React", "Three.js"],
   },
   {
