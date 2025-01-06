@@ -10,6 +10,13 @@ interface Project {
 
 const projects: Project[] = [
   {title: "X Timeout Redirect",
+    description: "Currently working on training a Natural Language Processing model to extract information from Resumes, so that I can add it to rishabhraj.net/job-application .",
+    date: "2025",
+    link: "https://github.com/rishabhrajphx/PDF-NLP",
+    tags: ["Python"], 
+  },
+
+  {title: "X Timeout Redirect",
     description: "Lot of people in the tech side of X.com spend more time larping and less time coding. \n So I made this to redirect them to the leetcode after 15 minutes.",
     date: "2025",
     link: "https://github.com/rishabhrajphx/x-leetcode-plugin",
