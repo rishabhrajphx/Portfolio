@@ -9,9 +9,15 @@ interface Project {
 }
 
 const projects: Project[] = [
+  {title: "X Timeout Redirect",
+    description: "Lot of people in the tech side of X.com spend more time larping and less time coding. \n So I made this to redirect them to the leetcode after 15 minutes.",
+    date: "2025",
+    link: "https://github.com/rishabhrajphx/x-leetcode-plugin",
+    tags: ["JavaScript"],
+  },
   {title: "Rishabh Raj Portfolio Website",
     description: "I built this website to showcase my projects and skills.",
-    date: "2025",
+    date: "December 2024 - Current",
     link: "https://github.com/rishabhrajphx/Portfolio",
     tags: ["TypeScript", "React", "Three.js"],
   },
