@@ -9,8 +9,15 @@ interface Project {
 }
 
 const projects: Project[] = [
-  {title: "X Timeout Redirect",
-    description: "Currently working on training a Natural Language Processing model to extract information from Resumes, so that I can add it to rishabhraj.net/job-application .",
+  {title: "Credit Card ChargeAutomation",
+    description: "Working on automating the credit card charge process for ASU, possibly sell this as SaaS.",
+    date: "2025",
+    link: "https://github.com/rishabhrajphx/My-SaaS",
+    tags: ["Python, HTML, CSS"], 
+  },
+
+  {title: "NLP Resume Extraction",
+    description: "Currently working on training a Natural Language Processing model to extract information from Resumes, Reciepts for personal learning and use.",
     date: "2025",
     link: "https://github.com/rishabhrajphx/PDF-NLP",
     tags: ["Python"], 
