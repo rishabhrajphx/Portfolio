@@ -81,13 +81,15 @@ export const ProjectTimeline = () => {
                   }`}>{project.date}</span>
                 </div>
                 <p className={`mb-4 ${
-                  darkMode ? 'text-gray-300' : 'text-gray-600'
+                  darkMode ? 'text-white' : 'text-white-600'
                 }`}>{project.description}</p>
                 <div className="flex flex-wrap gap-2">
                   {project.tags.map((tag, tagIndex) => (
                     <span
                       key={tagIndex}
-                      className="rounded-full bg-primary/10 px-3 py-1 text-sm text-primary"
+                      className={`rounded-full bg-primary/10 px-3 py-1 text-sm ${
+                        darkMode ? 'text-white' : 'text-primary'
+                      }`}
                     >
                       {tag}
                     </span>
@@ -95,7 +97,9 @@ export const ProjectTimeline = () => {
                 </div>
                 <a
                   href={project.link}
-                  className="mt-4 inline-block text-primary hover:text-primary/80"
+                  className={`mt-4 inline-block ${
+                    darkMode ? 'text-white' : 'text-primary'
+                  } hover:text-primary/80`}
                   target="_blank"
                   rel="noopener noreferrer"
                 >

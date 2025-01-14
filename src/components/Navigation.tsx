@@ -81,10 +81,10 @@ export const Navigation = () => {
         </div>
         <button
           onClick={toggleDarkMode}
-          className={`p-2 rounded-lg transition-colors ${
+          className={`p-2 transition-colors ${
             darkMode 
-              ? 'bg-gray-700 text-yellow-300' 
-              : 'bg-gray-200 text-gray-700'
+              ? 'text-yellow-300' 
+              : 'text-gray-700'
           }`}
           aria-label={darkMode ? 'Switch to light mode' : 'Switch to dark mode'}
         >

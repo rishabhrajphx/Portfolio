@@ -116,7 +116,7 @@ export const HeroSection = () => {
 
     // Create bubble material
     const bubbleMaterial = new THREE.MeshPhongMaterial({
-      color: darkMode ? 0x800000 : 0x800000,
+      color: darkMode ? 0xb01b2e : 0xb01b2e,
       transparent: true,
       opacity: 0.6,
       shininess: 200,
