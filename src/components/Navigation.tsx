@@ -34,8 +34,14 @@ export const Navigation = () => {
   return (
     <nav
       className={`fixed left-0 right-0 top-0 z-50 transition-all duration-300 backdrop-blur-md ${
-        isScrolled ? 'bg-white/30 py-4' : 'bg-white/50 py-6'
-      }`}
+        isScrolled 
+          ? darkMode 
+            ? 'bg-gray-900/30' 
+            : 'bg-white/30' 
+          : darkMode 
+            ? 'bg-gray-900/50' 
+            : 'bg-white/50'
+      } ${darkMode ? 'text-white' : 'text-gray-900'}`}
     >
       <div className="container mx-auto flex items-center justify-between px-4">
         <Link to="/" className="text-xl font-bold">
@@ -50,10 +56,16 @@ export const Navigation = () => {
               Web Projects
             </span>
             {isDropdownOpen && (
-              <div className="absolute left-0 top-full mt-2 bg-white rounded-lg shadow-lg py-2 min-w-[200px]">
+              <div className={`absolute left-0 top-full mt-2 rounded-lg shadow-lg py-2 min-w-[200px] ${
+                darkMode ? 'bg-gray-800' : 'bg-white'
+              }`}>
                 <Link
                   to="/job-portal"
-                  className="block px-4 py-2 hover:bg-gray-100 transition-colors"
+                  className={`block px-4 py-2 transition-colors ${
+                    darkMode 
+                      ? 'hover:bg-gray-700' 
+                      : 'hover:bg-gray-100'
+                  }`}
                 >
                   Job Application Portal
                 </Link>
@@ -69,7 +81,12 @@ export const Navigation = () => {
         </div>
         <button
           onClick={toggleDarkMode}
-          className="p-2 rounded-lg bg-gray-200 dark:bg-gray-700"
+          className={`p-2 rounded-lg transition-colors ${
+            darkMode 
+              ? 'bg-gray-700 text-yellow-300' 
+              : 'bg-gray-200 text-gray-700'
+          }`}
+          aria-label={darkMode ? 'Switch to light mode' : 'Switch to dark mode'}
         >
           {darkMode ? '☀️' : '🌙'}
         </button>
