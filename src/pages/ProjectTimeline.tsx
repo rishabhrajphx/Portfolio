@@ -1,4 +1,5 @@
 import { Card } from "@/components/ui/card";
+import { useDarkMode } from '../context/DarkModeContext';
 
 interface Project {
   title: string;
@@ -59,19 +60,29 @@ const projects: Project[] = [
 ];
 
 export const ProjectTimeline = () => {
+  const { darkMode } = useDarkMode();
+
   return (
-    <section className="container mx-auto px-4 py-16">
+    <section className={`container mx-auto px-4 py-16 ${
+      darkMode ? 'bg-gray-900 text-white' : 'bg-white text-gray-900'
+    }`}>
       <h2 className="mb-12 text-center text-3xl font-bold">Project Timeline</h2>
       <div className="mx-auto max-w-3xl">
         {projects.map((project, index) => (
           <div key={index} className="timeline-item">
-            <Card className="glass-card transform transition-all duration-300 hover:scale-[1.02]">
+            <Card className={`glass-card transform transition-all duration-300 hover:scale-[1.02] ${
+              darkMode ? 'bg-gray-800 border-gray-700' : 'bg-white border-gray-200'
+            }`}>
               <div className="p-6">
                 <div className="mb-2 flex items-center justify-between">
                   <h3 className="text-xl font-semibold">{project.title}</h3>
-                  <span className="text-sm text-muted-foreground">{project.date}</span>
+                  <span className={`text-sm ${
+                    darkMode ? 'text-gray-400' : 'text-gray-600'
+                  }`}>{project.date}</span>
                 </div>
-                <p className="mb-4 text-muted-foreground">{project.description}</p>
+                <p className={`mb-4 ${
+                  darkMode ? 'text-gray-300' : 'text-gray-600'
+                }`}>{project.description}</p>
                 <div className="flex flex-wrap gap-2">
                   {project.tags.map((tag, tagIndex) => (
                     <span

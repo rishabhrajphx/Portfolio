@@ -1,16 +1,20 @@
 import { useState } from 'react';
 import { Github, Linkedin, Mail, Phone } from 'lucide-react';
 import { Navigation } from '../components/Navigation';
+import { useDarkMode } from '../context/DarkModeContext';
 
 
 const Contacts = () => {
   const [isFlipped, setIsFlipped] = useState(false);
+  const { darkMode } = useDarkMode();
 
   
   return (
     <>
     <Navigation />
-    <div className="min-h-screen flex items-center justify-center bg-slate-100">
+    <div className={`min-h-screen flex items-center justify-center ${
+      darkMode ? 'bg-gray-900' : 'bg-slate-100'
+    }`}>
       <div 
         className={`w-[700px] h-[400px] cursor-pointer transition-all duration-500 [transform-style:preserve-3d] ${
           isFlipped ? '[transform:rotateY(180deg)]' : ''
@@ -18,11 +22,14 @@ const Contacts = () => {
         onClick={() => setIsFlipped(!isFlipped)}
       >
         {/* Front of Card */}
-        <div className="absolute w-full h-full [backface-visibility:hidden]
+        <div className={`absolute w-full h-full [backface-visibility:hidden]
           rounded-xl p-12
-          bg-gradient-to-br from-gray-200 via-gray-100 to-gray-300
+          ${darkMode 
+            ? 'bg-gradient-to-br from-gray-800 via-gray-700 to-gray-900 border-gray-600'
+            : 'bg-gradient-to-br from-gray-200 via-gray-100 to-gray-300 border-gray-300'
+          }
           shadow-[0_8px_16px_rgba(0,0,0,0.2),inset_0_2px_4px rgba(255,255,255,0.8)]
-          border border-gray-300"
+          border`}
         >
           <div className="flex gap-4">
             {/* Profile Image */}
@@ -36,8 +43,12 @@ const Contacts = () => {
 
             {/* Name and Title */}
             <div className="flex flex-col justify-center">
-              <h2 className="text-2xl font-bold text-maroon">Rishabh Raj</h2>
-              <p className="text-base text-gray-600">Software Developer</p>
+              <h2 className={`text-2xl font-bold ${
+                darkMode ? 'text-red-400' : 'text-maroon'
+              }`}>Rishabh Raj</h2>
+              <p className={`text-base ${
+                darkMode ? 'text-gray-300' : 'text-gray-600'
+              }`}>Software Developer</p>
             </div>
           </div>
 
@@ -58,11 +69,14 @@ const Contacts = () => {
         </div>
 
         {/* Back of Card */}
-        <div className="absolute w-full h-full [backface-visibility:hidden] [transform:rotateY(180deg)]
+        <div className={`absolute w-full h-full [backface-visibility:hidden] [transform:rotateY(180deg)]
           rounded-xl p-6
-          bg-gradient-to-br from-gray-300 via-gray-200 to-gray-400
+          ${darkMode 
+            ? 'bg-gradient-to-br from-gray-800 via-gray-700 to-gray-900 border-gray-600'
+            : 'bg-gradient-to-br from-gray-300 via-gray-200 to-gray-400 border-gray-300'
+          }
           shadow-[0_8px_16px_rgba(0,0,0,0.2),inset_0_2px_4px rgba(255,255,255,0.8)]
-          border border-gray-300"
+          border`}
         >
           <h3 className="text-lg font-semibold text-maroon mb-4">Connect With Me</h3>
           

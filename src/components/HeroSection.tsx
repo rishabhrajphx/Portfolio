@@ -1,6 +1,7 @@
 import { useEffect, useRef } from 'react';
 import * as THREE from 'three';
 import { ChevronDown } from 'lucide-react';
+import { useDarkMode } from '../context/DarkModeContext';
 
 interface Bubble {
   position: THREE.Vector3;
@@ -10,6 +11,7 @@ interface Bubble {
 }
 
 export const HeroSection = () => {
+  const { darkMode } = useDarkMode();
   const containerRef = useRef<HTMLDivElement>(null);
   const sceneRef = useRef<THREE.Scene | null>(null);
   const cameraRef = useRef<THREE.PerspectiveCamera | null>(null);
@@ -56,7 +58,7 @@ export const HeroSection = () => {
     geometry.setAttribute('position', new THREE.BufferAttribute(particles, 3));
     
     const material = new THREE.PointsMaterial({
-      color: 0xFFD700,
+      color: darkMode ? 0xc0c0c0 : 0xFFD700,
       size: 0.04,
       transparent: true,
       opacity: 0.9,
@@ -114,7 +116,7 @@ export const HeroSection = () => {
 
     // Create bubble material
     const bubbleMaterial = new THREE.MeshPhongMaterial({
-      color: 0x800000,
+      color: darkMode ? 0x800000 : 0x800000,
       transparent: true,
       opacity: 0.6,
       shininess: 200,
@@ -258,7 +260,7 @@ export const HeroSection = () => {
       });
       bubblesRef.current = [];
     };
-  }, []);
+  }, [darkMode]);
 
   useEffect(() => {
     const letters = "!_-+=)(*&^%$#@!1234567890?/>.<:;";
@@ -310,18 +312,22 @@ export const HeroSection = () => {
   };
 
   return (
-    <div className="relative h-screen">
+    <div className={`relative h-screen ${darkMode ? 'bg-gray-900' : 'bg-white'}`}>
       <div ref={containerRef} className="absolute inset-0" />
       <div className="relative z-10 flex h-full items-center justify-center">
         <div className="text-center">
           <h1 
-            className="animate-fade-in text-4xl font-bold sm:text-5xl md:text-6xl" 
+            className={`animate-fade-in text-4xl font-bold sm:text-5xl md:text-6xl ${
+              darkMode ? 'text-white' : 'text-gray-900'
+            }`}
             data-value="Rishabh Raj"
             draggable="false"
           >
             {/* Initial cryptic text will be set in useEffect */}
           </h1>
-          <p className="mt-4 animate-fade-in text-lg text-muted-foreground">
+          <p className={`mt-4 animate-fade-in text-lg ${
+            darkMode ? 'text-gray-300' : 'text-gray-600'
+          }`}>
             Software Developer • Cryptography Enthusiast • Problem Solver
           </p>
         </div>
