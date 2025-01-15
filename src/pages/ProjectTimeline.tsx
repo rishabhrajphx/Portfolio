@@ -11,7 +11,7 @@ interface Project {
 
 const projects: Project[] = [
   {title: "Credit Card ChargeAutomation",
-    description: "Working on automating the credit card charge process for ASU, possibly sell this as SaaS.",
+    description: "Working on automating the credit card charge process for ASU, possibly sell this as SaaS. \n Used Tesseract OCR to exract text from receipts and regex to extract the data.",
     date: "2025",
     link: "https://github.com/rishabhrajphx/My-SaaS",
     tags: ["Python, HTML, CSS"], 
