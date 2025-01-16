@@ -54,13 +54,15 @@ const Contacts = () => {
 
           {/* Contact Info */}
           <div className="mt-6 space-y-2">
-            <div className="flex items-center gap-2 text-base text-gray-700">
+            <div className="flex items-center gap-2 text-base">
               <Mail className="w-4 h-4 text-maroon" />
-              <a href="mailto:raj@rishabhraj.net" className="hover:underline">
+              <a href="mailto:raj@rishabhraj.net" 
+                className={`hover:underline ${
+                  darkMode ? 'text-white' : 'text-gray-700'
+                }`}>
                 raj@rishabhraj.net
               </a>
             </div>
-            
           </div>
 
           <div className="absolute bottom-4 right-4 text-xs text-gray-400">
