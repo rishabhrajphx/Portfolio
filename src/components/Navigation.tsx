@@ -10,7 +10,7 @@ export const Navigation = () => {
 
   useEffect(() => {
     const handleScroll = () => {
-      setIsScrolled(window.scrollY > 50);
+      setIsScrolled(window.scrollY > 100);
     };
 
     window.addEventListener('scroll', handleScroll);
@@ -43,25 +43,25 @@ export const Navigation = () => {
             : 'bg-white/50'
       } ${darkMode ? 'text-white' : 'text-gray-900'}`}
     >
-      <div className="container mx-auto flex items-center justify-between px-4">
-        <Link to="/" className="text-xl font-bold">
+      <div className="container mx-auto flex items-center justify-between px-4 py-4">
+        <Link to="/" className="text-2xl font-bold">
           Home
         </Link>
-        <div className="flex gap-6">
+        <div className="flex gap-8">
           <div className="relative" ref={dropdownRef}>
             <span
-              className="cursor-pointer transition-colors hover:text-primary"
+              className="cursor-pointer transition-colors hover:text-primary text-lg"
               onClick={() => setIsDropdownOpen(!isDropdownOpen)}
             >
               Web Projects
             </span>
             {isDropdownOpen && (
-              <div className={`absolute left-0 top-full mt-2 rounded-lg shadow-lg py-2 min-w-[200px] ${
+              <div className={`absolute left-0 top-full mt-2 rounded-lg shadow-lg py-3 min-w-[240px] ${
                 darkMode ? 'bg-gray-800' : 'bg-white'
               }`}>
                 <Link
                   to="/job-portal"
-                  className={`block px-4 py-2 transition-colors ${
+                  className={`block px-5 py-3 transition-colors text-lg ${
                     darkMode 
                       ? 'hover:bg-gray-700' 
                       : 'hover:bg-gray-100'
@@ -74,14 +74,14 @@ export const Navigation = () => {
           </div>
           <Link
             to="/contacts"
-            className="transition-colors hover:text-primary"
+            className="transition-colors hover:text-primary text-lg"
           >
             Contact
           </Link>
         </div>
         <button
           onClick={toggleDarkMode}
-          className={`p-2 transition-colors ${
+          className={`p-3 transition-colors text-2xl ${
             darkMode 
               ? 'text-yellow-300' 
               : 'text-gray-700'
