@@ -69,6 +69,16 @@ export const Navigation = () => {
                 >
                   Job Application Portal
                 </Link>
+                <Link
+                  to="/mnemosyne-demo"
+                  className={`block px-5 py-3 transition-colors text-lg ${
+                    darkMode 
+                      ? 'hover:bg-gray-700' 
+                      : 'hover:bg-gray-100'
+                  }`}
+                >
+                  Mnemosyne Demo
+                </Link>
               </div>
             )}
           </div>
