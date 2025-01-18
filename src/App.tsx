@@ -8,6 +8,7 @@ import Index from "./pages/Index";
 import Contacts from "./pages/Contacts";
 import JobPortal from './pages/job-portal';
 import { DarkModeProvider } from 'src/context/DarkModeContext';
+import MnemosyneDemo from './pages/MnemosyneDemo';
 
 const queryClient = new QueryClient();
 
@@ -21,6 +22,7 @@ const App = () => (
           <Route path="/" element={<Index />} />
           <Route path="/contacts" element={<Contacts />} />
           <Route path="/job-portal" element={<JobPortal />} />
+          <Route path="/mnemosyne-demo" element={<MnemosyneDemo />} />
         </Routes>
       </Router>
     </TooltipProvider>
