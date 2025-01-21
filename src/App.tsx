@@ -9,6 +9,7 @@ import Contacts from "./pages/Contacts";
 import JobPortal from './pages/job-portal';
 import { DarkModeProvider } from 'src/context/DarkModeContext';
 import MnemosyneDemo from './pages/MnemosyneDemo';
+import Navigation from './components/Navigation';
 
 const queryClient = new QueryClient();
 
@@ -18,6 +19,7 @@ const App = () => (
       <Toaster />
       <Sonner />
       <Router>
+        <Navigation />
         <Routes>
           <Route path="/" element={<Index />} />
           <Route path="/contacts" element={<Contacts />} />
