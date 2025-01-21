@@ -9,7 +9,7 @@ import Contacts from "./pages/Contacts";
 import JobPortal from './pages/job-portal';
 import { DarkModeProvider } from 'src/context/DarkModeContext';
 import MnemosyneDemo from './pages/MnemosyneDemo';
-import Navigation from './components/Navigation';
+import { Navigation } from './components/Navigation';
 
 const queryClient = new QueryClient();
 
