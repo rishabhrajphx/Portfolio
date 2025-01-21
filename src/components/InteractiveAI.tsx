@@ -2,6 +2,24 @@ import React, { useRef, useEffect, useState } from 'react';
 import * as THREE from 'three';
 import { useDarkMode } from '../context/DarkModeContext';
 
+// Add these type declarations at the top of the file
+declare global {
+  interface Window {
+    SpeechRecognition: any;
+    webkitSpeechRecognition: any;
+  }
+}
+
+interface SpeechRecognitionEvent {
+  results: {
+    [key: number]: {
+      [key: number]: {
+        transcript: string;
+      };
+    };
+  };
+}
+
 const InteractiveAI: React.FC = () => {
   const mountRef = useRef<HTMLDivElement>(null);
   const { darkMode } = useDarkMode();

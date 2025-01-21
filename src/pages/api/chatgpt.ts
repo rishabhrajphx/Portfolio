@@ -1,10 +1,9 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
-import { Configuration, OpenAIApi } from 'openai';
+import OpenAI from 'openai';
 
-const configuration = new Configuration({
-  apiKey: process.env.OPENAI_API_KEY, // Ensure you have this in your .env.local
+const openai = new OpenAI({
+  apiKey: process.env.OPENAI_API_KEY,
 });
-const openai = new OpenAIApi(configuration);
 
 type Data = {
   reply: string;
@@ -22,12 +21,12 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
   }
 
   try {
-    const response = await openai.createChatCompletion({
-      model: 'gpt-3.5-turbo', // or another model of your choice
+    const response = await openai.chat.completions.create({
+      model: 'gpt-3.5-turbo',
       messages: [{ role: 'user', content: prompt }],
     });
 
-    const reply = response.data.choices[0]?.message?.content.trim();
+    const reply = response.choices[0]?.message?.content.trim();
     res.status(200).json({ reply: reply || 'Sorry, I could not generate a response.' });
   } catch (error: any) {
     console.error('Error communicating with OpenAI:', error);
