@@ -23,135 +23,188 @@ interface SpeechRecognitionEvent {
 const InteractiveAI: React.FC = () => {
   const mountRef = useRef<HTMLDivElement>(null);
   const { darkMode } = useDarkMode();
-  const [isLoading, setIsLoading] = useState(false);
+  const [isListening, setIsListening] = useState(false);
   const [messages, setMessages] = useState<string[]>([]);
+  const sceneRef = useRef<THREE.Scene | null>(null);
+  const materialRef = useRef<THREE.ShaderMaterial | null>(null);
+
+  // Shader code
+  const vertexShader = `
+    varying vec2 vUv;
+    varying vec3 vPosition;
+    void main() {
+      vUv = uv;
+      vPosition = position;
+      gl_Position = projectionMatrix * modelMatrix * viewMatrix * vec4(position, 1.0);
+    }
+  `;
+
+  const fragmentShader = `
+    uniform float uTime;
+    uniform vec2 uMouse;
+    uniform float uProgress;
+    varying vec2 vUv;
+    varying vec3 vPosition;
+    
+    void main() {
+      // Animated gradient background
+      vec3 bgColor1 = mix(vec3(0.1, 0.2, 0.4), vec3(0.4, 0.1, 0.2), sin(uTime * 0.5) * 0.5 + 0.5);
+      vec3 bgColor2 = mix(vec3(0.3, 0.1, 0.4), vec3(0.1, 0.3, 0.4), cos(uTime * 0.3) * 0.5 + 0.5);
+      vec3 bg = mix(bgColor1, bgColor2, vUv.y);
+      
+      // Pulsing core
+      float pulse = sin(uTime * 2.0) * 0.1 + 0.9;
+      vec3 coreColor = vec3(0.8, 0.9, 1.0);
+      float dist = length(vUv - 0.5);
+      float core = smoothstep(0.5, 0.2, dist * pulse);
+      
+      // Interactive elements
+      vec2 mouseDist = vUv - uMouse;
+      float mouseInfluence = smoothstep(0.5, 0.0, length(mouseDist)) * 0.5;
+      float lightTrails = sin(vUv.x * 50.0 + uTime * 5.0) * 0.1;
+      
+      // Final color composition
+      vec3 finalColor = bg + core * coreColor + mouseInfluence + lightTrails;
+      
+      // Response animation
+      finalColor += vec3(uProgress) * 0.5 * (1.0 - smoothstep(0.0, 0.2, abs(dist - 0.25)));
+      
+      gl_FragColor = vec4(finalColor, 1.0);
+    }
+  `;
 
   useEffect(() => {
-    const current = mountRef.current;
-    if (!current) return;
+    const container = mountRef.current;
+    if (!container) return;
 
-    // Scene Setup
+    // Scene setup
     const scene = new THREE.Scene();
-    const camera = new THREE.PerspectiveCamera(
-      75,
-      current.clientWidth / current.clientHeight,
-      0.1,
-      1000
-    );
-    camera.position.z = 2;
-
-    // Renderer
+    const camera = new THREE.OrthographicCamera(-1, 1, 1, -1, 0, 1);
     const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
-    renderer.setSize(current.clientWidth, current.clientHeight);
-    current.appendChild(renderer.domElement);
+    renderer.setSize(container.clientWidth, container.clientHeight);
+    container.appendChild(renderer.domElement);
 
-    // Geometry and Material
-    const geometry = new THREE.TorusKnotGeometry(0.5, 0.2, 100, 16);
-    const material = new THREE.MeshStandardMaterial({
-      color: darkMode ? 0xffffff : 0x000000,
-      metalness: 0.5,
-      roughness: 0.1,
+    // Shader material
+    const material = new THREE.ShaderMaterial({
+      vertexShader,
+      fragmentShader,
+      uniforms: {
+        uTime: { value: 0 },
+        uMouse: { value: new THREE.Vector2(0.5, 0.5) },
+        uProgress: { value: 0 }
+      }
     });
-    const torusKnot = new THREE.Mesh(geometry, material);
-    scene.add(torusKnot);
 
-    // Lighting
-    const ambientLight = new THREE.AmbientLight(0xffffff, 0.5);
-    scene.add(ambientLight);
-    const pointLight = new THREE.PointLight(0xffffff, 1);
-    pointLight.position.set(5, 5, 5);
-    scene.add(pointLight);
+    // Fullscreen plane
+    const geometry = new THREE.PlaneGeometry(2, 2);
+    const mesh = new THREE.Mesh(geometry, material);
+    scene.add(mesh);
 
-    // Animation
-    const animate = () => {
-      requestAnimationFrame(animate);
-      torusKnot.rotation.x += 0.01;
-      torusKnot.rotation.y += 0.01;
+    sceneRef.current = scene;
+    materialRef.current = material;
+
+    // Animation loop
+    let animationFrame: number;
+    const animate = (time: number) => {
+      animationFrame = requestAnimationFrame(animate);
+      material.uniforms.uTime.value = time * 0.001;
       renderer.render(scene, camera);
     };
-    animate();
+    animate(0);
 
-    // Handle Resize
-    const handleResize = () => {
-      if (current.clientWidth && current.clientHeight) {
-        renderer.setSize(current.clientWidth, current.clientHeight);
-        camera.aspect = current.clientWidth / current.clientHeight;
-        camera.updateProjectionMatrix();
-      }
+    // Mouse interaction
+    const handleMouseMove = (e: MouseEvent) => {
+      const rect = container.getBoundingClientRect();
+      const x = (e.clientX - rect.left) / container.clientWidth;
+      const y = (e.clientY - rect.top) / container.clientHeight;
+      material.uniforms.uMouse.value.set(x, 1 - y);
     };
-    window.addEventListener('resize', handleResize);
+    container.addEventListener('mousemove', handleMouseMove);
 
-    // Clean Up
+    // Cleanup
     return () => {
-      window.removeEventListener('resize', handleResize);
-      current.removeChild(renderer.domElement);
+      cancelAnimationFrame(animationFrame);
+      container.removeChild(renderer.domElement);
+      container.removeEventListener('mousemove', handleMouseMove);
     };
-  }, [darkMode]);
+  }, []);
 
-  // Handle Click to Fetch ChatGPT Response
-  const handleClick = async () => {
-    setIsLoading(true);
+  const handleAIInteraction = async () => {
+    if (isListening) return;
+    
     try {
-      // Start Voice Recognition
-      const recognition = new (window.SpeechRecognition || (window as any).webkitSpeechRecognition)();
+      setIsListening(true);
+      if (materialRef.current) {
+        materialRef.current.uniforms.uProgress.value = 1;
+      }
+
+      // Voice recognition
+      const recognition = new (window.SpeechRecognition || window.webkitSpeechRecognition)();
       recognition.lang = 'en-US';
       recognition.interimResults = false;
-      recognition.maxAlternatives = 1;
 
       recognition.start();
+      
+      const transcript = await new Promise<string>((resolve) => {
+        recognition.onresult = (e: SpeechRecognitionEvent) => {
+          resolve(e.results[0][0].transcript);
+        };
+      });
 
-      recognition.onresult = async (event: SpeechRecognitionEvent) => {
-        const transcript = event.results[0][0].transcript;
-        setMessages((prev) => [...prev, `You: ${transcript}`]);
+      setMessages(prev => [...prev, `You: ${transcript}`]);
 
-        // Fetch ChatGPT Response
-        const response = await fetch('/api/chatgpt', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({ prompt: transcript }),
-        });
+      // API call
+      const response = await fetch('/api/chat', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ message: transcript }),
+      });
 
-        const data = await response.json();
-        const reply = data.reply;
-        setMessages((prev) => [...prev, `AI: ${reply}`]);
+      const data = await response.json();
+      setMessages(prev => [...prev, `AI: ${data.reply}`]);
 
-        // Speak the response
-        const utterance = new SpeechSynthesisUtterance(reply);
-        speechSynthesis.speak(utterance);
+      // Text-to-speech
+      const utterance = new SpeechSynthesisUtterance(data.reply);
+      speechSynthesis.speak(utterance);
 
-        setIsLoading(false);
-      };
-
-      recognition.onerror = (event: any) => {
-        console.error('Speech recognition error', event);
-        setIsLoading(false);
-      };
     } catch (error) {
-      console.error('Error fetching ChatGPT response:', error);
-      setIsLoading(false);
+      console.error('Interaction failed:', error);
+    } finally {
+      setIsListening(false);
+      if (materialRef.current) {
+        materialRef.current.uniforms.uProgress.value = 0;
+      }
     }
   };
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100 dark:bg-gray-800">
+    <div className="relative w-full h-screen bg-transparent">
       <div
         ref={mountRef}
-        className="w-64 h-64 cursor-pointer"
-        onClick={handleClick}
-        title="Click to interact with AI"
-      ></div>
-      {isLoading && <p className="mt-4 text-blue-500">Listening...</p>}
-      <div className="mt-4 w-80 max-h-60 overflow-y-auto bg-white dark:bg-gray-700 p-4 rounded-lg shadow-lg">
-        {messages.map((msg, index) => (
-          <p key={index} className="text-sm text-gray-800 dark:text-gray-200">
+        className="w-full h-full cursor-pointer"
+        onClick={handleAIInteraction}
+      />
+      
+      <div className="absolute bottom-4 left-4 right-4 max-h-40 overflow-y-auto bg-black/50 backdrop-blur-sm p-4 rounded-lg shadow-xl">
+        {messages.map((msg, i) => (
+          <div
+            key={i}
+            className={`text-sm mb-2 ${
+              msg.startsWith('You') ? 'text-blue-400' : 'text-green-400'
+            }`}
+          >
             {msg}
-          </p>
+          </div>
         ))}
+        {isListening && (
+          <div className="flex items-center text-purple-400 text-sm">
+            <div className="animate-pulse mr-2">●</div>
+            Listening...
+          </div>
+        )}
       </div>
     </div>
   );
 };
 
-export default InteractiveAI; 
+export default InteractiveAI;
