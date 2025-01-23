@@ -52,22 +52,22 @@ const InteractiveAI: React.FC = () => {
       vec3 bgColor2 = mix(vec3(0.3, 0.1, 0.4), vec3(0.1, 0.3, 0.4), cos(uTime * 0.3) * 0.5 + 0.5);
       vec3 bg = mix(bgColor1, bgColor2, vUv.y);
       
-      // Pulsing core
-      float pulse = sin(uTime * 2.0) * 0.1 + 0.9;
-      vec3 coreColor = vec3(0.8, 0.9, 1.0);
+      // Reduced core brightness and pulse intensity
+      float pulse = sin(uTime * 2.0) * 0.05 + 0.9;
+      vec3 coreColor = vec3(0.6, 0.7, 0.8);  // Darker blue-gray
       float dist = length(vUv - 0.5);
       float core = smoothstep(0.5, 0.2, dist * pulse);
       
-      // Interactive elements
+      // Reduced interactive element intensities
       vec2 mouseDist = vUv - uMouse;
-      float mouseInfluence = smoothstep(0.5, 0.0, length(mouseDist)) * 0.5;
-      float lightTrails = sin(vUv.x * 50.0 + uTime * 5.0) * 0.1;
+      float mouseInfluence = smoothstep(0.5, 0.0, length(mouseDist)) * 0.3;
+      float lightTrails = sin(vUv.x * 50.0 + uTime * 5.0) * 0.05;
       
       // Final color composition
       vec3 finalColor = bg + core * coreColor + mouseInfluence + lightTrails;
       
-      // Response animation
-      finalColor += vec3(uProgress) * 0.5 * (1.0 - smoothstep(0.0, 0.2, abs(dist - 0.25)));
+      // Reduced response animation intensity
+      finalColor += vec3(uProgress) * 0.3 * (1.0 - smoothstep(0.0, 0.2, abs(dist - 0.25)));
       
       gl_FragColor = vec4(finalColor, 1.0);
     }
