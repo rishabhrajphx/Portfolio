@@ -328,7 +328,7 @@ export const HeroSection = () => {
           <p className={`mt-4 animate-fade-in text-lg ${
             darkMode ? 'text-gray-300' : 'text-gray-600'
           }`}>
-            Software Developer • Cryptography Enthusiast • Problem Solver
+            Software Developer • ML Enthusiast • Problem Solver
           </p>
         </div>
       </div>
