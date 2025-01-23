@@ -43,25 +43,25 @@ export const Navigation = () => {
             : 'bg-white/50'
       } ${darkMode ? 'text-white' : 'text-gray-900'}`}
     >
-      <div className="container mx-auto flex items-center justify-between px-4 py-4">
-        <Link to="/" className="text-2xl font-bold">
+      <div className="container mx-auto flex items-center justify-between px-4 py-3">
+        <Link to="/" className="text-xl font-bold">
           Home
         </Link>
-        <div className="flex gap-8">
+        <div className="flex gap-6">
           <div className="relative" ref={dropdownRef}>
             <span
-              className="cursor-pointer transition-colors hover:text-primary text-lg"
+              className="cursor-pointer transition-colors hover:text-primary text-base"
               onClick={() => setIsDropdownOpen(!isDropdownOpen)}
             >
               Web Projects
             </span>
             {isDropdownOpen && (
-              <div className={`absolute left-0 top-full mt-2 rounded-lg shadow-lg py-3 min-w-[240px] ${
+              <div className={`absolute left-0 top-full mt-2 rounded-lg shadow-lg py-2 min-w-[200px] ${
                 darkMode ? 'bg-gray-800' : 'bg-white'
               }`}>
                 <Link
                   to="/job-portal"
-                  className={`block px-5 py-3 transition-colors text-lg ${
+                  className={`block px-4 py-2 transition-colors text-base ${
                     darkMode 
                       ? 'hover:bg-gray-700' 
                       : 'hover:bg-gray-100'
@@ -71,7 +71,7 @@ export const Navigation = () => {
                 </Link>
                 <Link
                   to="/mnemosyne-demo"
-                  className={`block px-5 py-3 transition-colors text-lg ${
+                  className={`block px-4 py-2 transition-colors text-base ${
                     darkMode 
                       ? 'hover:bg-gray-700' 
                       : 'hover:bg-gray-100'
@@ -84,14 +84,14 @@ export const Navigation = () => {
           </div>
           <Link
             to="/contacts"
-            className="transition-colors hover:text-primary text-lg"
+            className="transition-colors hover:text-primary text-base"
           >
             Contact
           </Link>
         </div>
         <button
           onClick={toggleDarkMode}
-          className={`p-3 transition-colors text-2xl ${
+          className={`p-2 transition-colors text-xl ${
             darkMode 
               ? 'text-yellow-300' 
               : 'text-gray-700'
