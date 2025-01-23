@@ -79,6 +79,16 @@ export const Navigation = () => {
                 >
                   Mnemosyne Demo
                 </Link>
+                <Link
+                  to="/agent-interface-demo"
+                  className={`block px-4 py-2 transition-colors text-base ${
+                    darkMode 
+                      ? 'hover:bg-gray-700' 
+                      : 'hover:bg-gray-100'
+                  }`}
+                >
+                  Agent Interface Demo
+                </Link>
               </div>
             )}
           </div>
