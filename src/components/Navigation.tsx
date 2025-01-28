@@ -56,15 +56,15 @@ export const Navigation = () => {
               Web Projects
             </span>
             {isDropdownOpen && (
-              <div className={`absolute left-0 top-full mt-2 rounded-lg shadow-lg py-2 min-w-[200px] ${
-                darkMode ? 'bg-gray-800' : 'bg-white'
-              }`}>
+              <div 
+                className={`absolute left-0 top-full mt-2 rounded-lg shadow-lg py-2 min-w-[200px] ${
+                  darkMode ? 'bg-gray-800' : 'bg-white'
+                }`}
+              >
                 <Link
                   to="/job-portal"
                   className={`block px-4 py-2 transition-colors text-base ${
-                    darkMode 
-                      ? 'hover:bg-gray-700' 
-                      : 'hover:bg-gray-100'
+                    darkMode ? 'hover:bg-gray-700' : 'hover:bg-gray-100'
                   }`}
                 >
                   Job Application Portal
@@ -72,29 +72,27 @@ export const Navigation = () => {
                 <Link
                   to="/mnemosyne-demo"
                   className={`block px-4 py-2 transition-colors text-base ${
-                    darkMode 
-                      ? 'hover:bg-gray-700' 
-                      : 'hover:bg-gray-100'
+                    darkMode ? 'hover:bg-gray-700' : 'hover:bg-gray-100'
                   }`}
                 >
                   Mnemosyne Demo
                 </Link>
-                </div>
-                )}
-                </div>
-                <Link
-                to="/contacts"
-                className="transition-colors hover:text-primary text-base"
-                >
+              </div>
+            )}
+          </div>
+          
+          <Link
+            to="/contacts"
+            className="transition-colors hover:text-primary text-base"
+          >
             Contact
           </Link>
         </div>
+
         <button
           onClick={toggleDarkMode}
           className={`p-2 transition-colors text-xl ${
-            darkMode 
-              ? 'text-yellow-300' 
-              : 'text-gray-700'
+            darkMode ? 'text-yellow-300' : 'text-gray-700'
           }`}
           aria-label={darkMode ? 'Switch to light mode' : 'Switch to dark mode'}
         >
