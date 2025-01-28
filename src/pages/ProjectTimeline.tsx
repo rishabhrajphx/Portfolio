@@ -10,11 +10,11 @@ interface Project {
 }
 
 const projects: Project[] = [
-  {title: "Credit Card ChargeAutomation",
-    description: "Working on automating the credit card charge process for ASU, possibly sell this as SaaS. \n Used Tesseract OCR to exract text from receipts and regex to extract the data.",
+  {title: "Founder: ApproveMate",
+    description: "Developed software, in beta testing, to allow for the process of Credit Card Charge Request to be streamlined and get done in less than a minute. \n Working on a subscription model along with resolving bugs in the software to ship it as fast as possible.",
     date: "2025",
     link: "https://github.com/rishabhrajphx/My-SaaS",
-    tags: ["Python, HTML, CSS"], 
+    tags: ["Python, HTML, Regex"], 
   },
 
   {title: "NLP Resume Extraction",
