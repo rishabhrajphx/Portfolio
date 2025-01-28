@@ -26,7 +26,6 @@ const App = () => (
           <Route path="/contacts" element={<Contacts />} />
           <Route path="/job-portal" element={<JobPortal />} />
           <Route path="/mnemosyne-demo" element={<MnemosyneDemo />} />
-          <Route path="/agent-interface-demo" element={<AgentInterfaceDemo />} />
         </Routes>
       </Router>
     </TooltipProvider>
