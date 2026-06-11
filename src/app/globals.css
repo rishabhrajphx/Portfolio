@@ -1,26 +1,353 @@
 @import "tailwindcss";
 
+/* ─── Desert Systems Design Tokens ─────────────────────────────────────────── */
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --sand-100: #fff8ec;
+  --sand-150: #faefd9;
+  --sand-200: #f6e8cf;
+  --sand-300: #eacb98;
+  --sand-400: #d7b275;
+  --amber-300: #e7b15f;
+  --amber-400: #d9923b;
+  --amber-500: #c86b1d;
+  --brown-950: #1f1711;
+  --brown-900: #2a2119;
+  --brown-700: #5a4735;
+  --brown-500: #8b735c;
+  --line-warm: rgba(78, 55, 31, 0.16);
+  --line-warm-strong: rgba(78, 55, 31, 0.28);
+  --glass-light: rgba(255, 250, 240, 0.58);
+  --glass-strong: rgba(255, 250, 240, 0.78);
+  --glass-blue: #dce8e7;
+  --slate-tech: #637371;
+  --spectral-pearl: #f7f3ff;
+  --spectral-lilac: #dcceff;
+  --spectral-cyan: #d7f3f4;
+  --spectral-rose: #f3d8e7;
+  --spectral-mint: #ddf2e6;
 }
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --color-background: var(--sand-200);
+  --color-foreground: var(--brown-900);
+  --font-sans: var(--font-inter);
+  --font-display: var(--font-space-grotesk);
+  --font-mono: var(--font-ibm-plex-mono);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+/* ─── Reset & Base ──────────────────────────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; }
+html { height: 100%; scroll-behavior: smooth; }
+
+body {
+  min-height: 100%;
+  display: flex;
+  flex-direction: column;
+  background:
+    radial-gradient(circle at 75% 18%, rgba(214, 125, 35, 0.22), transparent 32%),
+    radial-gradient(circle at 18% 28%, rgba(255, 188, 94, 0.18), transparent 34%),
+    linear-gradient(180deg, var(--sand-100) 0%, var(--sand-200) 48%, #efe0c8 100%);
+  color: var(--brown-900);
+  font-family: var(--font-inter), system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* ─── Keyframes ─────────────────────────────────────────────────────────────── */
+@keyframes mist-drift {
+  from { transform: translate3d(-2%, -1%, 0) scale(1); }
+  to   { transform: translate3d(2%, 1%, 0) scale(1.04); }
+}
+@keyframes shimmer-rotate {
+  0%   { background-position: 0% 50%; }
+  50%  { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+@keyframes spectral-pulse {
+  0%, 100% { opacity: 0.55; }
+  50%       { opacity: 0.9; }
+}
+@keyframes shimmer-sweep {
+  0%   { transform: translateX(-100%); }
+  100% { transform: translateX(350%); }
+}
+/* Card box-shadow shimmer — cycles through spectral hues */
+@keyframes card-halo {
+  0%   {
+    box-shadow:
+      0 0 0 1.5px rgba(220, 206, 255, 0.45),
+      0 0 18px rgba(220, 206, 255, 0.12),
+      0 20px 60px rgba(78, 55, 31, 0.08);
+  }
+  25%  {
+    box-shadow:
+      0 0 0 1.5px rgba(215, 243, 244, 0.50),
+      0 0 18px rgba(215, 243, 244, 0.14),
+      0 20px 60px rgba(78, 55, 31, 0.08);
+  }
+  50%  {
+    box-shadow:
+      0 0 0 1.5px rgba(243, 216, 231, 0.45),
+      0 0 18px rgba(243, 216, 231, 0.12),
+      0 20px 60px rgba(78, 55, 31, 0.08);
+  }
+  75%  {
+    box-shadow:
+      0 0 0 1.5px rgba(221, 242, 230, 0.40),
+      0 0 18px rgba(221, 242, 230, 0.10),
+      0 20px 60px rgba(78, 55, 31, 0.08);
+  }
+  100% {
+    box-shadow:
+      0 0 0 1.5px rgba(220, 206, 255, 0.45),
+      0 0 18px rgba(220, 206, 255, 0.12),
+      0 20px 60px rgba(78, 55, 31, 0.08);
+  }
+}
+/* Shimmer blob drift animations */
+@keyframes blob-1 {
+  0%   { transform: translate(0, 0)    scale(1);    }
+  50%  { transform: translate(12%, 18%) scale(1.18); }
+  100% { transform: translate(0, 0)    scale(1);    }
+}
+@keyframes blob-2 {
+  0%   { transform: translate(0, 0)     scale(1);    }
+  50%  { transform: translate(-14%, 10%) scale(0.88); }
+  100% { transform: translate(0, 0)     scale(1);    }
+}
+@keyframes blob-3 {
+  0%   { transform: translate(0, 0)     scale(1);    }
+  50%  { transform: translate(-8%, -14%) scale(1.12); }
+  100% { transform: translate(0, 0)     scale(1);    }
+}
+@keyframes blob-4 {
+  0%   { transform: translate(0, 0)    scale(1);    }
+  50%  { transform: translate(10%, -8%) scale(1.08); }
+  100% { transform: translate(0, 0)    scale(1);    }
+}
+
+/* ─── Mist layers ───────────────────────────────────────────────────────────── */
+.mist {
+  position: fixed;
+  inset: -20%;
+  pointer-events: none;
+  z-index: 0;
+  background:
+    radial-gradient(circle at 70% 30%, rgba(200, 107, 29, 0.16), transparent 28%),
+    radial-gradient(circle at 12% 70%, rgba(220, 206, 255, 0.07), transparent 24%),
+    radial-gradient(circle at 88% 78%, rgba(215, 243, 244, 0.06), transparent 20%),
+    linear-gradient(90deg, transparent, rgba(255, 169, 77, 0.10), transparent);
+  filter: blur(52px);
+  opacity: 0.75;
+  animation: mist-drift 22s ease-in-out infinite alternate;
+}
+
+.mist-spectral {
+  position: fixed;
+  inset: -10%;
+  pointer-events: none;
+  z-index: 0;
+  background:
+    radial-gradient(ellipse at 5% 20%,  rgba(180, 150, 255, 0.10), transparent 30%),
+    radial-gradient(ellipse at 95% 15%, rgba(130, 220, 240, 0.09), transparent 28%),
+    radial-gradient(ellipse at 50% 95%, rgba(240, 180, 210, 0.08), transparent 32%),
+    radial-gradient(ellipse at 80% 55%, rgba(170, 235, 200, 0.06), transparent 25%);
+  filter: blur(64px);
+  animation: mist-drift 34s ease-in-out infinite alternate-reverse;
+}
+
+/* ─── Grid overlay ──────────────────────────────────────────────────────────── */
+.grid-overlay {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  background-image:
+    linear-gradient(rgba(70, 45, 20, 0.045) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(70, 45, 20, 0.045) 1px, transparent 1px);
+  background-size: 48px 48px;
+}
+
+/* ─── Annihilation shimmer blobs — hero section ─────────────────────────────── */
+/*
+   Translucent iridescent blobs with mix-blend-mode: overlay.
+   They interact with the warm sand background to create
+   oil-slick interference colour — purple, teal, rose, mint shifting.
+*/
+.shimmer-field {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.shimmer-blob {
+  position: absolute;
+  border-radius: 50%;
+  mix-blend-mode: overlay;
+}
+
+.shimmer-blob--lilac {
+  width: 55%; height: 55%;
+  top: -18%; left: -8%;
+  background: radial-gradient(circle, rgba(160, 120, 255, 0.42) 0%, transparent 68%);
+  filter: blur(55px);
+  animation: blob-1 20s ease-in-out infinite;
+}
+.shimmer-blob--cyan {
+  width: 45%; height: 45%;
+  top: 5%; right: -10%;
+  background: radial-gradient(circle, rgba(80, 210, 230, 0.38) 0%, transparent 68%);
+  filter: blur(50px);
+  animation: blob-2 26s ease-in-out infinite;
+}
+.shimmer-blob--rose {
+  width: 50%; height: 40%;
+  bottom: -10%; left: 25%;
+  background: radial-gradient(circle, rgba(220, 130, 180, 0.32) 0%, transparent 68%);
+  filter: blur(60px);
+  animation: blob-3 22s ease-in-out infinite;
+}
+.shimmer-blob--mint {
+  width: 35%; height: 45%;
+  top: 40%; right: 10%;
+  background: radial-gradient(circle, rgba(100, 220, 180, 0.28) 0%, transparent 68%);
+  filter: blur(48px);
+  animation: blob-4 28s ease-in-out infinite;
+}
+/* Pearl highlight — white light catching the edge */
+.shimmer-blob--pearl {
+  width: 30%; height: 30%;
+  top: 8%; left: 40%;
+  background: radial-gradient(circle, rgba(240, 235, 255, 0.22) 0%, transparent 60%);
+  filter: blur(40px);
+  animation: blob-2 18s ease-in-out infinite reverse;
+}
+
+/* ─── Glass panels ──────────────────────────────────────────────────────────── */
+.panel {
+  background: var(--glass-light);
+  border: 1px solid var(--line-warm);
+  border-radius: 6px;
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+  box-shadow: 0 20px 60px rgba(78, 55, 31, 0.07);
+}
+
+/* Spectral panel — visible animated iridescent border via box-shadow halo */
+.panel--spectral {
+  position: relative;
+  border-color: transparent;
+  animation: card-halo 7s ease-in-out infinite;
+}
+
+/* Rotating gradient border overlay (mask technique) */
+.panel--spectral::before {
+  content: "";
+  position: absolute;
+  inset: -1px;
+  border-radius: inherit;
+  padding: 1px;
+  background: linear-gradient(
+    115deg,
+    rgba(220, 206, 255, 0.55),
+    rgba(215, 243, 244, 0.50),
+    rgba(200, 107, 29,  0.35),
+    rgba(243, 216, 231, 0.50),
+    rgba(221, 242, 230, 0.45),
+    rgba(220, 206, 255, 0.55)
+  );
+  background-size: 300% 300%;
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  pointer-events: none;
+  animation: shimmer-rotate 6s ease infinite, spectral-pulse 4s ease-in-out infinite;
+}
+
+/* Light-streak sweep on hover */
+.panel--spectral::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: linear-gradient(
+    105deg,
+    transparent 15%,
+    rgba(215, 243, 244, 0.12) 38%,
+    rgba(220, 206, 255, 0.18) 50%,
+    rgba(243, 216, 231, 0.12) 62%,
+    transparent 85%
+  );
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 160ms ease;
+}
+.panel--spectral:hover::after {
+  opacity: 1;
+  animation: shimmer-sweep 1.2s ease forwards;
+}
+/* On hover: bigger halo + faster shimmer */
+.panel--spectral:hover {
+  animation: none;
+  box-shadow:
+    0 0 0 1.5px rgba(215, 243, 244, 0.65),
+    0 0 28px rgba(220, 206, 255, 0.22),
+    0 0 4px  rgba(243, 216, 231, 0.18),
+    0 20px 60px rgba(78, 55, 31, 0.10);
+}
+.panel--spectral:hover::before { animation-duration: 2s, 1.5s; }
+
+/* ─── Scan line (card hover) ────────────────────────────────────────────────── */
+.scan-line::after {
+  content: "";
+  position: absolute;
+  left: 0; right: 0;
+  height: 1px;
+  top: 0;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(215, 243, 244, 0.55),
+    rgba(220, 206, 255, 0.45),
+    rgba(200, 107, 29,  0.28),
+    transparent
+  );
+  opacity: 0;
+  transition: opacity 160ms ease, top 360ms ease;
+}
+.scan-line:hover::after { opacity: 1; top: 100%; }
+
+/* ─── Typography helpers ────────────────────────────────────────────────────── */
+.font-display { font-family: var(--font-space-grotesk), sans-serif; }
+.font-mono    { font-family: var(--font-ibm-plex-mono), monospace; }
+
+.hero-title {
+  font-family: var(--font-space-grotesk), sans-serif;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  font-weight: 500;
+  line-height: 0.92;
+}
+
+.eyebrow {
+  font-family: var(--font-ibm-plex-mono), monospace;
+  font-size: 0.65rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--amber-500);
+}
+
+/* ─── Reduced motion ────────────────────────────────────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation: none !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
-}
+/* ─── Scrollbar ─────────────────────────────────────────────────────────────── */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: var(--sand-200); }
+::-webkit-scrollbar-thumb { background: var(--sand-400); border-radius: 3px; }
