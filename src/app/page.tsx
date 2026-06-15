@@ -26,16 +26,6 @@ export default function Home() {
         </div>
 
         <div className="max-w-[1440px] mx-auto px-4 md:px-8 lg:px-12 pt-20 pb-24 md:pt-32 md:pb-36 relative">
-          {/* Status eyebrow */}
-          <div className="flex items-center gap-3 mb-8">
-            <span
-              className="w-1.5 h-1.5 rounded-full animate-pulse"
-              style={{ background: "var(--amber-500)" }}
-              aria-hidden="true"
-            />
-            <span className="eyebrow">System Status — Online</span>
-          </div>
-
           {/* Name */}
           <h1
             className="hero-title text-[clamp(4rem,12vw,10rem)] mb-6"

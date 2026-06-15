@@ -107,23 +107,6 @@ export default function LifePage() {
           ))}
         </div>
 
-        {/* Film note */}
-        <div
-          className="mt-14 panel rounded-sm p-6 md:p-8 border-l-2"
-          style={{ borderLeftColor: "var(--amber-500)" }}
-        >
-          <p className="eyebrow mb-3">Design Influences</p>
-          <p className="text-sm leading-relaxed max-w-2xl" style={{ color: "var(--brown-700)" }}>
-            This site was designed under the influence of{" "}
-            <em>Blade Runner 2049</em>,{" "}
-            <em>Dune</em>,{" "}
-            <em>DEVS</em>,{" "}
-            <em>Oblivion</em>, and{" "}
-            <em>Annihilation</em>. The warm orange haze, glass panels, topographic lines, and spectral shimmer
-            are all deliberate references — not aesthetic decoration, but a design language that connects
-            how I see software, tools, and systems.
-          </p>
-        </div>
       </section>
 
       <Footer />

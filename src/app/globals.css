@@ -127,6 +127,11 @@ body {
 }
 
 /* ─── Mist layers ───────────────────────────────────────────────────────────── */
+/*
+  will-change: transform promotes each layer to its own GPU compositing layer
+  so the blur and animation never trigger a full-page repaint on scroll.
+  transform: translateZ(0) forces the promotion even when animation is idle.
+*/
 .mist {
   position: fixed;
   inset: -20%;
@@ -139,6 +144,8 @@ body {
     linear-gradient(90deg, transparent, rgba(255, 169, 77, 0.10), transparent);
   filter: blur(52px);
   opacity: 0.75;
+  will-change: transform;
+  transform: translateZ(0);
   animation: mist-drift 22s ease-in-out infinite alternate;
 }
 
@@ -153,6 +160,8 @@ body {
     radial-gradient(ellipse at 50% 95%, rgba(240, 180, 210, 0.08), transparent 32%),
     radial-gradient(ellipse at 80% 55%, rgba(170, 235, 200, 0.06), transparent 25%);
   filter: blur(64px);
+  will-change: transform;
+  transform: translateZ(0);
   animation: mist-drift 34s ease-in-out infinite alternate-reverse;
 }
 
@@ -162,6 +171,8 @@ body {
   inset: 0;
   pointer-events: none;
   z-index: 0;
+  will-change: transform;
+  transform: translateZ(0);
   background-image:
     linear-gradient(rgba(70, 45, 20, 0.045) 1px, transparent 1px),
     linear-gradient(90deg, rgba(70, 45, 20, 0.045) 1px, transparent 1px);
@@ -169,22 +180,20 @@ body {
 }
 
 /* ─── Annihilation shimmer blobs — hero section ─────────────────────────────── */
-/*
-   Translucent iridescent blobs with mix-blend-mode: overlay.
-   They interact with the warm sand background to create
-   oil-slick interference colour — purple, teal, rose, mint shifting.
-*/
 .shimmer-field {
   position: absolute;
   inset: 0;
   pointer-events: none;
   overflow: hidden;
+  /* contain keeps blob repaints inside the hero, away from scroll content */
+  contain: strict;
 }
 
 .shimmer-blob {
   position: absolute;
   border-radius: 50%;
   mix-blend-mode: overlay;
+  will-change: transform;
 }
 
 .shimmer-blob--lilac {
@@ -215,7 +224,6 @@ body {
   filter: blur(48px);
   animation: blob-4 28s ease-in-out infinite;
 }
-/* Pearl highlight — white light catching the edge */
 .shimmer-blob--pearl {
   width: 30%; height: 30%;
   top: 8%; left: 40%;
