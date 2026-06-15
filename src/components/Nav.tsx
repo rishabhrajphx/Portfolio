@@ -1,7 +1,7 @@
 "use client";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useState } from "react";
+import { useState, useRef, useCallback } from "react";
 
 const links = [
   { href: "/systems", label: "Work" },
@@ -11,9 +11,46 @@ const links = [
   { href: "/machine", label: "Resume" },
 ];
 
+const GLYPHS = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789$#@%&*";
+const SHORT   = "RR";
+const FULL    = "RISHABH RAJ";
+
+function useScramble() {
+  const [text, setText] = useState(SHORT);
+  const timer = useRef<ReturnType<typeof setInterval> | null>(null);
+
+  const scrambleTo = useCallback((target: string) => {
+    if (timer.current) clearInterval(timer.current);
+    let frame = 0;
+    const totalFrames = target.length * 4; // frames before fully locked
+    timer.current = setInterval(() => {
+      const progress = frame / 4; // chars locked per frame-group
+      setText(
+        target
+          .split("")
+          .map((char, i) => {
+            if (char === " ") return " ";
+            if (i < progress) return target[i];
+            return GLYPHS[Math.floor(Math.random() * GLYPHS.length)];
+          })
+          .join("")
+      );
+      frame++;
+      if (frame > totalFrames) {
+        setText(target);
+        clearInterval(timer.current!);
+        timer.current = null;
+      }
+    }, 32);
+  }, []);
+
+  return { text, scrambleTo };
+}
+
 export default function Nav() {
   const pathname = usePathname();
   const [open, setOpen] = useState(false);
+  const { text: brandText, scrambleTo } = useScramble();
 
   return (
     <header className="relative z-50 w-full">
@@ -25,16 +62,26 @@ export default function Nav() {
           className="max-w-[1440px] mx-auto px-4 md:px-8 lg:px-12 flex items-center justify-between"
           style={{ height: "56px" }}
         >
-          {/* Brand */}
+          {/* Brand — scrambles RR → RISHABH RAJ on hover */}
           <Link
             href="/"
-            className="font-display font-medium tracking-[0.18em] text-sm uppercase"
-            style={{ color: "var(--brown-900)" }}
+            className="font-display font-medium tracking-[0.18em] text-sm uppercase select-none"
+            style={{ color: "var(--brown-900)", minWidth: "2.5rem" }}
+            onMouseEnter={() => scrambleTo(FULL)}
+            onMouseLeave={() => scrambleTo(SHORT)}
+            onFocus={() => scrambleTo(FULL)}
+            onBlur={() => scrambleTo(SHORT)}
+            aria-label="Rishabh Raj — home"
           >
             <span className="hidden sm:inline" style={{ color: "var(--amber-500)" }}>
               [-/&nbsp;
             </span>
-            <span>RR</span>
+            <span
+              className="font-mono inline-block transition-none"
+              style={{ color: "var(--brown-900)", letterSpacing: "0.14em" }}
+            >
+              {brandText}
+            </span>
             <span className="hidden sm:inline" style={{ color: "var(--amber-500)" }}>
               &nbsp;]
             </span>
@@ -49,9 +96,7 @@ export default function Nav() {
                   key={href}
                   href={href}
                   className="font-mono text-xs tracking-[0.14em] uppercase transition-colors duration-150 relative"
-                  style={{
-                    color: active ? "var(--amber-500)" : "var(--brown-700)",
-                  }}
+                  style={{ color: active ? "var(--amber-500)" : "var(--brown-700)" }}
                 >
                   {label}
                   {active && (
@@ -72,27 +117,25 @@ export default function Nav() {
             aria-label={open ? "Close menu" : "Open menu"}
             aria-expanded={open}
           >
-            <span
-              className="block w-5 h-px transition-all duration-200"
-              style={{
-                background: "var(--brown-700)",
-                transform: open ? "translateY(6px) rotate(45deg)" : "none",
-              }}
-            />
-            <span
-              className="block w-5 h-px transition-all duration-200"
-              style={{
-                background: "var(--brown-700)",
-                opacity: open ? 0 : 1,
-              }}
-            />
-            <span
-              className="block w-5 h-px transition-all duration-200"
-              style={{
-                background: "var(--brown-700)",
-                transform: open ? "translateY(-6px) rotate(-45deg)" : "none",
-              }}
-            />
+            {[
+              open ? "translateY(6px) rotate(45deg)" : "none",
+              null,
+              open ? "translateY(-6px) rotate(-45deg)" : "none",
+            ].map((transform, i) =>
+              transform === null ? (
+                <span
+                  key={i}
+                  className="block w-5 h-px transition-all duration-200"
+                  style={{ background: "var(--brown-700)", opacity: open ? 0 : 1 }}
+                />
+              ) : (
+                <span
+                  key={i}
+                  className="block w-5 h-px transition-all duration-200"
+                  style={{ background: "var(--brown-700)", transform }}
+                />
+              )
+            )}
           </button>
         </div>
       </div>
