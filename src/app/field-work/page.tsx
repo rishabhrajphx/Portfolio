@@ -143,30 +143,30 @@ export default function FieldWorkPage() {
         <div className="mt-14">
           <p className="eyebrow mb-6">Materials</p>
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
-            {[
-              {
-                category: "AI / ML",
-                items: ["OpenAI APIs", "LangChain", "PyTorch", "Whisper", "Tool Calling", "RAG"],
-              },
+            [
               {
                 category: "Languages",
-                items: ["Python", "TypeScript", "Swift", "Go", "SQL", "Bash"],
+                items: ["TypeScript", "Python", "Java", "C", "C++", "C#", "Swift"],
               },
               {
-                category: "Frontend",
-                items: ["React", "Next.js", "SwiftUI", "Tailwind CSS", "Framer Motion"],
+                category: "Frameworks & Libraries",
+                items: ["React", "Node.js", "Tailwind", "PyTorch", "SwiftUI"],
               },
               {
-                category: "Backend",
-                items: ["FastAPI", "Node.js", "PostgreSQL", "Redis", "WebSockets"],
+                category: "Databases",
+                items: ["PostgreSQL", "MySQL", "NoSQL"],
               },
               {
-                category: "Infrastructure",
-                items: ["Kubernetes", "Docker", "AWS", "Linux", "Terraform", "Tailscale"],
+                category: "AI & Machine Learning",
+                items: ["LLM Infrastructure", "RAG", "Reinforcement Learning", "Fine-tuning", "AI Agents", "Tool Calling"],
               },
               {
-                category: "Tooling",
-                items: ["Git", "Grafana", "Prometheus", "Tesseract", "Jupyter"],
+                category: "DevOps & Infrastructure",
+                items: ["Docker", "Kubernetes", "Linux", "Git", "Unit Testing"],
+              },
+              {
+                category: "Other",
+                items: ["Cybersecurity", "HCI / Figma", "Full-stack Development", "iOS Development", "PowerShell", "GPU Resource Management"],
               },
             ].map(({ category, items }) => (
               <div key={category} className="panel rounded-sm p-4">
