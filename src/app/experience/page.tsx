@@ -141,7 +141,7 @@ export default function ExperiencePage() {
         <div className="mt-14">
           <p className="eyebrow mb-6">Materials</p>
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
-            [
+            {[
               {
                 category: "Languages",
                 items: ["TypeScript", "Python", "Java", "C", "C++", "C#", "Swift"],
