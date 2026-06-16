@@ -194,7 +194,7 @@ export default function MachinePage() {
 
         {/* Last updated */}
         <p className="font-mono text-[0.6rem] tracking-[0.12em]" style={{ color: "var(--brown-500)" }}>
-          Last updated: 2026-05-18 · Desert Systems
+          Last updated: 2026-05-18
         </p>
       </section>
 

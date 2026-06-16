@@ -25,7 +25,7 @@ export default function Footer() {
               className="font-mono text-xs tracking-[0.1em]"
               style={{ color: "var(--brown-700)" }}
             >
-              33.4255° N, 111.9400° W
+              33.4207° N, 111.9340° W
             </p>
             <p
               className="font-mono text-xs tracking-[0.1em]"
@@ -61,7 +61,7 @@ export default function Footer() {
             className="font-mono text-[0.6rem] tracking-[0.12em]"
             style={{ color: "var(--brown-500)" }}
           >
-            DESERT SYSTEMS — RISHABH RAJ
+            RISHABH RAJ
           </p>
           <div className="flex gap-4">
             <a

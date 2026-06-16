@@ -22,11 +22,11 @@ const ibmPlexMono = IBM_Plex_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Rishabh Raj — Desert Systems",
+  title: "Rishabh Raj",
   description:
     "Software engineer building tools for humans, teams, and machines. Working across AI agents, mobile apps, automation, and infrastructure.",
   openGraph: {
-    title: "Rishabh Raj — Desert Systems",
+    title: "Rishabh Raj",
     description:
       "Software engineer building tools for humans, teams, and machines.",
     type: "website",

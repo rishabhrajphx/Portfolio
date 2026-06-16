@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 
-const content = `# Rishabh Raj — Desert Systems Portfolio
+const content = `# Rishabh Raj — Portfolio
 
 ## Identity
 Name: Rishabh Raj
