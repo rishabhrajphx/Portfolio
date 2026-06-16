@@ -7,7 +7,19 @@
       "Bash(npm run *)",
       "Bash(echo \"PID: $!\")",
       "Bash(curl -s -o /dev/null -w \"%{http_code}\" http://localhost:3007)",
-      "mcp__Claude_Preview__preview_start"
+      "mcp__Claude_Preview__preview_start",
+      "Bash(git -C /Users/raj/Projects/Portfolio-Website fetch origin)",
+      "Bash(git -C /Users/raj/Projects/Portfolio-Website log --oneline origin/main)",
+      "Bash(git -C /Users/raj/Projects/Portfolio-Website add src/app/icon.svg src/app/layout.tsx src/components/Nav.tsx public/favicon.svg)",
+      "Bash(git -C /Users/raj/Projects/Portfolio-Website commit -m ' *)",
+      "Bash(git -C /Users/raj/Projects/Portfolio-Website push origin main)",
+      "Bash(git add *)",
+      "Bash(git commit -m ' *)",
+      "Bash(git push *)",
+      "Bash(cp -r /Users/raj/Projects/Portfolio-Website/src/app/systems /Users/raj/Projects/Portfolio-Website/src/app/work)",
+      "Bash(cp -r /Users/raj/Projects/Portfolio-Website/src/app/field-work /Users/raj/Projects/Portfolio-Website/src/app/experience)",
+      "Bash(sed -i '' 's|href=\"/systems\"|href=\"/work\"|g' /Users/raj/Projects/Portfolio-Website/src/app/page.tsx)",
+      "Bash(sed -i '' 's|href={`/systems/${|href={`/work/${|g' /Users/raj/Projects/Portfolio-Website/src/components/ProjectCard.tsx)"
     ]
   }
 }

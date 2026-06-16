@@ -59,7 +59,7 @@ export default function Home() {
           {/* CTAs */}
           <div className="flex flex-wrap gap-3">
             <Link
-              href="/systems"
+              href="/work"
               className="inline-flex items-center gap-2 px-6 py-3 font-mono text-xs tracking-[0.14em] uppercase transition-all duration-200 hover:opacity-90"
               style={{
                 background: "var(--amber-500)",
@@ -135,7 +135,7 @@ export default function Home() {
               </h2>
             </div>
             <Link
-              href="/systems"
+              href="/work"
               className="hidden sm:flex items-center gap-2 font-mono text-[0.65rem] tracking-[0.14em] uppercase transition-colors duration-150"
               style={{ color: "var(--amber-500)" }}
             >
@@ -150,7 +150,7 @@ export default function Home() {
           </div>
 
           <div className="mt-6 sm:hidden">
-            <Link href="/systems" className="font-mono text-[0.65rem] tracking-[0.14em] uppercase" style={{ color: "var(--amber-500)" }}>
+            <Link href="/work" className="font-mono text-[0.65rem] tracking-[0.14em] uppercase" style={{ color: "var(--amber-500)" }}>
               All Work →
             </Link>
           </div>

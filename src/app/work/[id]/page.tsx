@@ -17,7 +17,7 @@ export async function generateMetadata({
   const project = projects.find((p) => p.id === id);
   if (!project) return {};
   return {
-    title: `${project.name} — Systems — Rishabh Raj`,
+    title: `${project.name} — Rishabh Raj`,
     description: project.summary,
   };
 }
@@ -36,10 +36,10 @@ export default async function ProjectPage({
       <section className="border-b" style={{ borderColor: "var(--line-warm)" }}>
         <div className="max-w-[1440px] mx-auto px-4 md:px-8 lg:px-12 pt-14 pb-12">
           <Link
-            href="/systems"
+            href="/work"
             className="eyebrow mb-8 inline-flex items-center gap-2 transition-colors duration-150 hover:opacity-70"
           >
-            ← Systems
+            ← Work
           </Link>
 
           <div className="flex items-center gap-3 mt-6 mb-4">

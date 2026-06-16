@@ -4,8 +4,8 @@ import { usePathname } from "next/navigation";
 import { useState, useRef, useCallback } from "react";
 
 const links = [
-  { href: "/systems", label: "Work" },
-  { href: "/field-work", label: "Experience" },
+  { href: "/work", label: "Work" },
+  { href: "/experience", label: "Experience" },
   { href: "/notes", label: "Notes" },
   { href: "/life", label: "Life" },
   { href: "/machine", label: "Resume" },

@@ -55,8 +55,8 @@ export const experience: Role[] = [
   {
     org: "Arizona State University",
     role: "Teaching Assistant & Grader — Entrepreneurship",
-    start: "2024",
-    end: "2025",
+    start: "Summer 2025",
+    end: "Present",
     location: "Tempe, AZ",
     type: "ACADEMIC",
     bullets: [
@@ -64,6 +64,18 @@ export const experience: Role[] = [
       "Held office hours and supported students through coursework and project development.",
     ],
     stack: [],
+  },
+  {
+    org: "B-Side Capital",
+    role: "AI Engineer Intern",
+    start: "2025",
+    end: "Present",
+    location: "Denver, CO",
+    type: "INTERNSHIP",
+    bullets: [
+      "Building AI-powered tools and systems for an early-stage venture capital firm.",
+    ],
+    stack: ["Python", "AI Agents"],
   },
 ];
 

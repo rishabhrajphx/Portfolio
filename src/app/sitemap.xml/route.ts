@@ -7,15 +7,15 @@ export function GET() {
 
   const staticRoutes = [
     { path: "/", priority: "1.0", freq: "monthly" },
-    { path: "/systems", priority: "0.9", freq: "monthly" },
-    { path: "/field-work", priority: "0.8", freq: "monthly" },
+    { path: "/work", priority: "0.9", freq: "monthly" },
+    { path: "/experience", priority: "0.8", freq: "monthly" },
     { path: "/life", priority: "0.7", freq: "monthly" },
     { path: "/notes", priority: "0.7", freq: "weekly" },
     { path: "/machine", priority: "0.8", freq: "monthly" },
   ];
 
   const projectRoutes = projects.map((p) => ({
-    path: `/systems/${p.id}`,
+    path: `/work/${p.id}`,
     priority: "0.7",
     freq: "monthly",
   }));

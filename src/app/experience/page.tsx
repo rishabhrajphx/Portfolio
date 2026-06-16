@@ -3,33 +3,31 @@ import Footer from "@/components/Footer";
 import { experience, education } from "@/data/experience";
 
 export const metadata: Metadata = {
-  title: "Field Work — Rishabh Raj",
-  description: "Experience log — roles, impact, and tools used across research, startups, and freelance work.",
+  title: "Experience — Rishabh Raj",
+  description: "Roles, internships, and what I built at each one.",
 };
 
-export default function FieldWorkPage() {
+export default function ExperiencePage() {
   return (
     <>
       {/* Header */}
       <section className="relative border-b" style={{ borderColor: "var(--line-warm)" }}>
         <div className="max-w-[1440px] mx-auto px-4 md:px-8 lg:px-12 pt-16 pb-14">
-          <p className="eyebrow mb-4">/ Field Work</p>
+          <p className="eyebrow mb-4">/ Experience</p>
           <h1
             className="font-display text-[clamp(2.5rem,7vw,5.5rem)] font-medium tracking-[0.1em] uppercase leading-none mb-4"
             style={{ color: "var(--brown-950)" }}
           >
-            Field Work
+            Experience
           </h1>
           <p className="text-base max-w-lg leading-relaxed" style={{ color: "var(--brown-700)" }}>
-            A mission log of roles, impact, and tools — research, startups, and client work.
+            Where I've worked and what I built there.
           </p>
         </div>
       </section>
 
       {/* Experience timeline */}
       <section className="max-w-[1440px] mx-auto px-4 md:px-8 lg:px-12 py-12 md:py-16">
-        <p className="eyebrow mb-8">Mission Log</p>
-
         <div className="relative">
           {/* Timeline spine */}
           <div

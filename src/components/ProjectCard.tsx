@@ -74,7 +74,7 @@ export default function ProjectCard({ project }: { project: Project }) {
             </Link>
           ))}
           <Link
-            href={`/systems/${project.id}`}
+            href={`/work/${project.id}`}
             className="font-mono text-[0.65rem] tracking-[0.12em] uppercase transition-colors duration-150 flex items-center gap-1.5"
             style={{ color: "var(--brown-500)" }}
           >
