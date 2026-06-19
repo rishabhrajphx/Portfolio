@@ -86,39 +86,6 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ── SYSTEM OVERVIEW ─────────────────────────────────────────── */}
-      <section aria-labelledby="overview-heading" className="relative">
-        <div className="absolute inset-x-0 top-0 h-px" style={{ background: "var(--line-warm)" }} aria-hidden="true" />
-        <div className="max-w-[1440px] mx-auto px-4 md:px-8 lg:px-12 py-14 md:py-16">
-          <p className="eyebrow mb-6">&gt;_ Overview</p>
-
-          <dl className="panel rounded-sm max-w-2xl" style={{ padding: "1.5rem 2rem" }}>
-            {[
-              ["Location", "Tempe, AZ"],
-              ["Focus", "AI Systems / Full-Stack / iOS / Infra"],
-              ["Current Mode", "Building / Climbing / Rowing / Watching Films"],
-              ["Uptime", "Always Improving"],
-            ].map(([key, val]) => (
-              <div
-                key={key}
-                className="flex gap-4 py-2.5 border-b last:border-0"
-                style={{ borderColor: "var(--line-warm)" }}
-              >
-                <dt
-                  className="font-mono text-xs tracking-[0.12em] uppercase w-32 shrink-0"
-                  style={{ color: "var(--brown-500)" }}
-                >
-                  {key}
-                </dt>
-                <dd className="font-mono text-xs tracking-[0.08em]" style={{ color: "var(--brown-900)" }}>
-                  {val}
-                </dd>
-              </div>
-            ))}
-          </dl>
-        </div>
-      </section>
-
       {/* ── FEATURED SYSTEMS ────────────────────────────────────────── */}
       <section aria-labelledby="systems-heading" className="relative">
         <div className="absolute inset-x-0 top-0 h-px" style={{ background: "var(--line-warm)" }} aria-hidden="true" />
