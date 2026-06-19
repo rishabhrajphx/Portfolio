@@ -10,7 +10,7 @@ export function GET() {
       focus: ["AI Systems", "Full-Stack", "iOS", "Infrastructure"],
       location: "Tempe, AZ",
       contact: {
-        email: "rishabhnewmob@gmail.com",
+        email: "raj@rishabhraj.net",
         github: "https://github.com/rishabhrajphx",
         linkedin: "https://www.linkedin.com/in/rishabhrajcs/",
         letterboxd: "https://letterboxd.com",

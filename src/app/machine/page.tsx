@@ -27,8 +27,8 @@ export default function MachinePage() {
           </p>
           <p className="font-mono text-xs mt-1" style={{ color: "var(--brown-500)" }}>
             Tempe, AZ ·{" "}
-            <a href="mailto:rishabhnewmob@gmail.com" className="hover:text-[var(--amber-500)] transition-colors duration-150">
-              rishabhnewmob@gmail.com
+            <a href="mailto:raj@rishabhraj.net" className="hover:text-[var(--amber-500)] transition-colors duration-150">
+              raj@rishabhraj.net
             </a>
           </p>
           <div className="flex flex-wrap gap-3 mt-6">
@@ -117,14 +117,6 @@ export default function MachinePage() {
           <div className="flex flex-col gap-4">
             {projects.map((p) => (
               <div key={p.id} className="panel rounded-sm p-5">
-                <div className="flex items-center gap-3 mb-2">
-                  <span className="font-mono text-[0.6rem] tracking-[0.16em] uppercase px-2 py-0.5 border" style={{ color: "var(--amber-500)", borderColor: "rgba(200,107,29,0.28)", background: "rgba(200,107,29,0.06)" }}>
-                    {p.type}
-                  </span>
-                  <span className="font-mono text-[0.6rem] tracking-[0.1em]" style={{ color: "var(--brown-500)" }}>
-                    {p.status}
-                  </span>
-                </div>
                 <h2
                   className="font-display text-sm font-medium tracking-[0.08em] uppercase mb-1"
                   style={{ color: "var(--brown-950)" }}

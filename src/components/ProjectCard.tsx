@@ -2,26 +2,13 @@ import Link from "next/link";
 import type { Project } from "@/data/projects";
 
 export default function ProjectCard({ project }: { project: Project }) {
-  const statusColor: Record<Project["status"], string> = {
-    ACTIVE: "var(--amber-500)",
-    SHIPPED: "var(--brown-500)",
-    ONGOING: "var(--amber-400)",
-    ARCHIVED: "var(--brown-500)",
-  };
-
   return (
     <article className="panel panel--spectral scan-line rounded-sm relative overflow-hidden group">
       <div className="p-6 md:p-8">
-        {/* Header row */}
-        <div className="flex items-start justify-between gap-4 mb-4">
+        {/* Number */}
+        <div className="mb-4">
           <span className="font-mono text-xs" style={{ color: "var(--brown-500)" }}>
             {project.number}
-          </span>
-          <span
-            className="font-mono text-[0.6rem] tracking-[0.12em]"
-            style={{ color: statusColor[project.status] }}
-          >
-            {project.status}
           </span>
         </div>
 

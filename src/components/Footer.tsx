@@ -3,7 +3,7 @@ export default function Footer() {
     { label: "GitHub", href: "https://github.com/rishabhrajphx" },
     { label: "LinkedIn", href: "https://www.linkedin.com/in/rishabhrajcs/" },
     { label: "Letterboxd", href: "https://letterboxd.com" },
-    { label: "Email", href: "mailto:rishabhnewmob@gmail.com" },
+    { label: "Email", href: "mailto:raj@rishabhraj.net" },
   ];
 
   return (
