@@ -35,6 +35,9 @@ I turn messy workflows into practical systems people actually use.
 4. HOMELAB — Private cloud and self-hosted infrastructure with GPU resources
    Stack: Kubernetes, Docker, Linux, Prometheus, Grafana, Tailscale
 
+5. MAIN & MACHINE — SOC2 and HIPAA compliant AI agent for small business paperwork automation
+   Stack: Python, AI Agents
+
 ## Experience
 - Research Assistant, ASU (AI & HCI) — 2024–Present
 - Co-founder & iOS Lead, Out There Social Club — 2023–2024

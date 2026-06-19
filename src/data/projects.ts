@@ -53,8 +53,8 @@ export const projects: Project[] = [
     description:
       "A native iOS application built to surface hyperlocal deals, events, and community activity in Tempe, AZ. Connects local businesses with residents through a curated feed, location-aware discovery, and push notifications. Built with Swift and SwiftUI with a Node.js backend.",
     tags: ["SWIFT", "IOS", "STARTUP", "LOCAL"],
-    stack: ["Swift", "SwiftUI", "Node.js", "PostgreSQL", "AWS"],
-    role: "Co-founder, iOS Lead",
+    stack: ["Swift", "SwiftUI", "Firebase"],
+    role: "Founding Engineer, CTO",
     status: "SHIPPED",
     links: [{ label: "GitHub", href: "https://github.com/rraj31" }],
     featured: true,
@@ -72,6 +72,21 @@ export const projects: Project[] = [
     role: "Solo — Architecture, Ops",
     status: "ONGOING",
     links: [{ label: "GitHub", href: "https://github.com/rraj31" }],
+    featured: true,
+  },
+  {
+    id: "main-and-machine",
+    number: "05",
+    type: "SYSTEM",
+    name: "MAIN & MACHINE",
+    summary: "SOC2 and HIPAA compliant AI agent that handles paperwork for small businesses.",
+    description:
+      "A prototype AI agent built for small businesses that need compliance without a compliance team. Handles document intake, classification, and processing across common business paperwork workflows. Designed from the ground up to meet SOC2 and HIPAA requirements — data handling, audit trails, access controls, and retention policies are part of the architecture, not bolted on afterward.",
+    tags: ["AI AGENTS", "COMPLIANCE", "SOC2", "HIPAA", "AUTOMATION"],
+    stack: ["Python", "AI Agents"],
+    role: "Solo — Architecture, Backend",
+    status: "ACTIVE",
+    links: [],
     featured: true,
   },
 ];
