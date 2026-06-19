@@ -25,7 +25,7 @@ const activities = [
     label: "Flint-knapping",
     tag: "Experimental Archaeology",
     description:
-      "I am an officer in ASU's Experimental Archaeology Club, where we practice flint-knapping in the Ancient Technology Lab. We make hand axes, arrowheads, arrows, pump drills with knapped stone tips, and Stone Age drill tips. We also do red ochre rock painting using methods based on ancient techniques.",
+      "I am an officer in ASU's Experimental Archaeology Club, where we practice flint-knapping in the Ancient Technology Lab. We make hand axes, arrowheads, arrows, pump drills with knapped stone tips. We also do red ochre rock painting using methods based on ancient techniques.",
     detail: "Experimental Archaeology Club @ ASU",
   },
   {
