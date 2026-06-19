@@ -8,9 +8,7 @@ export default function Footer() {
 
   return (
     <footer className="relative z-10 mt-24 border-t" style={{ borderColor: "var(--line-warm)" }}>
-      {/* Area 17 ruled-line motif */}
-      <div className="line-pattern h-20 md:h-28" aria-hidden="true" />
-      <div className="max-w-[1440px] mx-auto px-4 md:px-8 lg:px-12 pb-10 md:pb-14">
+      <div className="max-w-[1440px] mx-auto px-4 md:px-8 lg:px-12 py-10 md:py-14">
         <div className="flex flex-col md:flex-row items-start md:items-end justify-between gap-8">
           {/* Coordinates block */}
           <div>

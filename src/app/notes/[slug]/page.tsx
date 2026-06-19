@@ -110,23 +110,6 @@ export default async function NotePage({
                   {note.date}
                 </p>
               </div>
-              <div>
-                <p className="eyebrow mb-3">Filed under</p>
-                <div className="flex flex-wrap gap-2">
-                  {note.tags.map((t) => (
-                    <span
-                      key={t}
-                      className="font-mono text-[0.58rem] tracking-[0.14em] uppercase px-2 py-0.5 rounded-full"
-                      style={{
-                        color: "var(--brown-500)",
-                        border: "1px solid var(--line-warm)",
-                      }}
-                    >
-                      {t}
-                    </span>
-                  ))}
-                </div>
-              </div>
               <Link
                 href="/notes"
                 className="eyebrow transition-opacity duration-150 hover:opacity-70"
