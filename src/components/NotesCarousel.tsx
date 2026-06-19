@@ -1,43 +1,139 @@
 "use client";
 
 import Link from "next/link";
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { themeForIndex, type Note } from "@/data/notes";
 
-export default function NotesCarousel({ notes }: { notes: Note[] }) {
-  const [index, setIndex] = useState(0);
-  const count = notes.length;
+const TRANS = "transform 600ms cubic-bezier(0.22, 1, 0.36, 1)";
 
-  const go = useCallback(
-    (next: number) => setIndex(((next % count) + count) % count),
+export default function NotesCarousel({ notes }: { notes: Note[] }) {
+  const count = notes.length;
+  const [index, setIndex] = useState(0);
+
+  const viewportRef = useRef<HTMLDivElement>(null);
+  const trackRef = useRef<HTMLDivElement>(null);
+
+  // Relative step with wrap-around — safe for stale closures (functional update)
+  const step = useCallback(
+    (d: number) => setIndex((i) => (((i + d) % count) + count) % count),
     [count]
   );
 
+  // Drive the track transform whenever the index settles (snap / advance)
+  useEffect(() => {
+    const t = trackRef.current;
+    if (!t) return;
+    t.style.transition = TRANS;
+    t.style.transform = `translateX(-${index * 100}%)`;
+  }, [index]);
+
+  // Keyboard
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
-      if (e.key === "ArrowRight") go(index + 1);
-      if (e.key === "ArrowLeft") go(index - 1);
+      if (e.key === "ArrowRight") step(1);
+      if (e.key === "ArrowLeft") step(-1);
     };
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
-  }, [go, index]);
+  }, [step]);
+
+  // Trackpad / mouse-wheel horizontal swipe
+  useEffect(() => {
+    const el = viewportRef.current;
+    if (!el) return;
+    let locked = false;
+    const onWheel = (e: WheelEvent) => {
+      // Only hijack clearly-horizontal gestures; let vertical scroll pass through
+      if (Math.abs(e.deltaX) <= Math.abs(e.deltaY)) return;
+      e.preventDefault(); // stop the browser's back/forward history swipe
+      if (locked) return;
+      if (e.deltaX > 24) step(1);
+      else if (e.deltaX < -24) step(-1);
+      else return;
+      locked = true;
+      setTimeout(() => {
+        locked = false;
+      }, 500);
+    };
+    el.addEventListener("wheel", onWheel, { passive: false });
+    return () => el.removeEventListener("wheel", onWheel);
+  }, [step]);
+
+  // Pointer drag — unifies mouse, touch, and pen
+  const drag = useRef({ active: false, startX: 0, dx: 0, moved: false });
+
+  const onPointerDown = (e: React.PointerEvent) => {
+    drag.current = { active: true, startX: e.clientX, dx: 0, moved: false };
+    const t = trackRef.current;
+    if (t) t.style.transition = "none";
+  };
+
+  const onPointerMove = (e: React.PointerEvent) => {
+    const d = drag.current;
+    if (!d.active) return;
+    let dx = e.clientX - d.startX;
+    // Rubber-band resistance at the ends
+    if ((index === 0 && dx > 0) || (index === count - 1 && dx < 0)) dx *= 0.35;
+    d.dx = dx;
+    if (Math.abs(dx) > 8) {
+      d.moved = true;
+      viewportRef.current?.setPointerCapture(e.pointerId);
+    }
+    const t = trackRef.current;
+    if (t) t.style.transform = `translateX(calc(-${index * 100}% + ${dx}px))`;
+  };
+
+  const endDrag = (e: React.PointerEvent) => {
+    const d = drag.current;
+    if (!d.active) return;
+    d.active = false;
+    viewportRef.current?.releasePointerCapture?.(e.pointerId);
+
+    const w = viewportRef.current?.offsetWidth ?? 1;
+    const threshold = Math.min(120, w * 0.18);
+    let target = index;
+    if (d.dx <= -threshold && index < count - 1) target = index + 1;
+    else if (d.dx >= threshold && index > 0) target = index - 1;
+
+    if (target === index) {
+      // Snap back to where we are (the index effect won't fire)
+      const t = trackRef.current;
+      if (t) {
+        t.style.transition = TRANS;
+        t.style.transform = `translateX(-${index * 100}%)`;
+      }
+    } else {
+      setIndex(target);
+    }
+  };
 
   return (
     <div className="w-full">
       {/* Viewport */}
       <div
-        className="relative overflow-hidden rounded-[20px]"
-        style={{ border: "1px solid var(--line-warm)" }}
+        ref={viewportRef}
+        className="relative overflow-hidden rounded-[20px] select-none cursor-grab active:cursor-grabbing"
+        style={{ border: "1px solid var(--line-warm)", touchAction: "pan-y" }}
         role="region"
         aria-roledescription="carousel"
         aria-label="Notes"
+        onPointerDown={onPointerDown}
+        onPointerMove={onPointerMove}
+        onPointerUp={endDrag}
+        onPointerCancel={endDrag}
+        onDragStart={(e) => e.preventDefault()}
+        onClickCapture={(e) => {
+          // Swallow the click that ends a drag so links don't fire
+          if (drag.current.moved) {
+            e.preventDefault();
+            e.stopPropagation();
+          }
+        }}
       >
         <div
-          className="flex transition-transform duration-[600ms]"
-          style={{
-            transform: `translateX(-${index * 100}%)`,
-            transitionTimingFunction: "cubic-bezier(0.22, 1, 0.36, 1)",
-          }}
+          ref={trackRef}
+          className="flex"
+          style={{ transform: `translateX(-${index * 100}%)` }}
         >
           {notes.map((note, i) => {
             const theme = themeForIndex(i);
@@ -95,7 +191,11 @@ export default function NotesCarousel({ notes }: { notes: Note[] }) {
                     >
                       {note.date}
                     </p>
-                    <Link href={`/notes/${note.slug}`} className="group block">
+                    <Link
+                      href={`/notes/${note.slug}`}
+                      draggable={false}
+                      className="group block"
+                    >
                       <h3
                         className="font-display font-medium tracking-[0.04em] uppercase leading-[0.98] mb-6 transition-opacity duration-200 group-hover:opacity-80"
                         style={{
@@ -114,6 +214,7 @@ export default function NotesCarousel({ notes }: { notes: Note[] }) {
                     </p>
                     <Link
                       href={`/notes/${note.slug}`}
+                      draggable={false}
                       className="inline-flex items-center gap-2 px-6 py-3 rounded-full font-mono text-xs tracking-[0.14em] uppercase transition-all duration-200"
                       style={{
                         color: "var(--sand-100)",
@@ -146,7 +247,7 @@ export default function NotesCarousel({ notes }: { notes: Note[] }) {
           {notes.map((note, i) => (
             <button
               key={note.slug}
-              onClick={() => go(i)}
+              onClick={() => setIndex(i)}
               aria-label={`Go to ${note.title}`}
               aria-current={i === index}
               className="h-1.5 rounded-full transition-all duration-300"
@@ -162,7 +263,7 @@ export default function NotesCarousel({ notes }: { notes: Note[] }) {
         {/* Arrows */}
         <div className="flex items-center gap-3">
           <button
-            onClick={() => go(index - 1)}
+            onClick={() => step(-1)}
             aria-label="Previous note"
             className="w-11 h-11 rounded-full flex items-center justify-center font-mono text-sm transition-colors duration-150 hover:border-[var(--brown-700)]"
             style={{
@@ -173,7 +274,7 @@ export default function NotesCarousel({ notes }: { notes: Note[] }) {
             ←
           </button>
           <button
-            onClick={() => go(index + 1)}
+            onClick={() => step(1)}
             aria-label="Next note"
             className="w-11 h-11 rounded-full flex items-center justify-center font-mono text-sm transition-colors duration-150 hover:border-[var(--brown-700)]"
             style={{
