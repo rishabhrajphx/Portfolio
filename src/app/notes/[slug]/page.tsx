@@ -52,6 +52,19 @@ export default async function NotePage({
             filter: "blur(8px)",
           }}
         />
+        {/* Grid — viewport-anchored (background-attachment: fixed) so its
+            lines align with the page's global grid overlay across the
+            hero/body boundary. Same 48px cell as .grid-overlay. */}
+        <div
+          aria-hidden="true"
+          className="absolute inset-0 pointer-events-none"
+          style={{
+            backgroundImage:
+              "linear-gradient(rgba(255,248,236,0.08) 1px, transparent 1px), linear-gradient(90deg, rgba(255,248,236,0.08) 1px, transparent 1px)",
+            backgroundSize: "48px 48px",
+            backgroundAttachment: "fixed",
+          }}
+        />
         <div className="relative max-w-[1100px] mx-auto px-4 md:px-8 lg:px-12 pt-12 pb-16 md:pt-16 md:pb-24">
           <Link
             href="/notes"
