@@ -9,38 +9,39 @@ export const metadata: Metadata = {
 const activities = [
   {
     label: "Rock Climbing",
-    tag: "Sport & Trad",
+    tag: "Bouldering & Sport",
     description:
-      "Desert sandstone and limestone. Climbing teaches the same problem-solving loop as debugging: read the route, hypothesize a sequence, commit, adapt when you're wrong. The rock doesn't care about your confidence level.",
-    detail: "Favorite areas: Arizona desert crags, Red Rock Canyon",
+      "I climb V3 at Bouldering Project and 5.11c at Phoenix Rock Gym. I like climbing because it is social, physical, and technical without needing too much explanation. It is a good way to spend time with friends and solve problems and work out by pushing your mind and body to its limits.",
+    detail: "Bouldering Project; Phoenix Rock Gym",
   },
   {
     label: "Dragon Boat Racing",
     tag: "Competitive",
     description:
-      "Twenty people, one drum, one hull. Dragon boat is the closest sport to deploying infrastructure — individual timing doesn't matter, only synchronized cadence does. Every race is a distributed systems problem.",
-    detail: "Racing with ASU Dragon Boat",
+      "I race dragon boat with ASU at Tempe Town Lake. It is loud, tiring, and a lot more fun than it looks from shore. Everyone has to pull together, so it is a good sport for people who like teams and do not mind working hard.",
+    detail: "ASU Dragon Boat at Tempe Town Lake",
   },
   {
     label: "Flint-knapping",
-    tag: "Stone Tool Making",
+    tag: "Experimental Archaeology",
     description:
-      "Shaping obsidian and chert into tools using pressure and percussion — the oldest form of engineering. Flint-knapping is unforgiving: every strike is irreversible. It built my tolerance for the cost of mistakes and the value of planning.",
-    detail: "Bifacial points, scrapers, arrowheads",
+      "I am an officer in ASU's Experimental Archaeology Club, where we practice flint-knapping in the Ancient Technology Lab. We make hand axes, arrowheads, arrows, pump drills with knapped stone tips, and Stone Age drill tips. We also do red ochre rock painting using methods based on ancient techniques.",
+    detail: "Experimental Archaeology Club @ ASU",
   },
   {
     label: "Cycling",
-    tag: "Road & Gravel",
+    tag: "Road",
     description:
-      "Long rides in the Arizona heat. Cycling is time to think without a screen — the only kind of thinking that actually works on hard problems. Some of my best architectural decisions have happened at mile 40.",
-    detail: "Road and gravel, desert routes",
+      "I ride mostly around Tempe and Phoenix, especially on the bike path along the lake between the two cities. It is one of the better places in the area to ride without constantly dealing with traffic. Long rides help me clear my head and spend time outside for a while. I also built my bike from parts at Bike Saviours Co-Op in Tempe.",
+    detail: "Tempe and Phoenix routes",
   },
   {
     label: "Film",
-    tag: "Letterboxd Tracked",
+    tag: "AMC A-List",
     description:
-      "I watch films the way I read documentation — looking for the structure underneath. Favorites include Blade Runner 2049, Dune, Annihilation, DEVS, Oblivion, and most things by Denis Villeneuve and Alex Garland. The design language of this site owes them something.",
+      "I am an AMC A-Lister and I watch a lot of movies. Favorites include Blade Runner 2049, Dune, Annihilation, DEVS, Oblivion, and most things by Denis Villeneuve and Alex Garland. The design language of this site owes them something. My Letterboxd Top 4: Dune, Top Gun: Maverick, The Fall, and Megalopolis.",
     detail: "Tracked on Letterboxd",
+    href: "https://letterboxd.com/muadibmaverick/",
   },
 ];
 
@@ -50,7 +51,7 @@ export default function LifePage() {
       {/* Header */}
       <section className="relative border-b" style={{ borderColor: "var(--line-warm)" }}>
         <div className="max-w-[1440px] mx-auto px-4 md:px-8 lg:px-12 pt-16 pb-14">
-          <p className="eyebrow mb-4">Outside the Terminal</p>
+          <p className="eyebrow mb-4">/ Life</p>
           <h1
             className="font-display text-[clamp(2.5rem,7vw,5.5rem)] font-medium tracking-[0.1em] uppercase leading-none mb-4"
             style={{ color: "var(--brown-950)" }}
@@ -58,7 +59,7 @@ export default function LifePage() {
             Life
           </h1>
           <p className="text-base max-w-lg leading-relaxed" style={{ color: "var(--brown-700)" }}>
-            The things I do when I'm not writing code — and why they make me better at it.
+            What I do when I am not writing code.
           </p>
         </div>
       </section>
@@ -71,21 +72,8 @@ export default function LifePage() {
               {/* Left */}
               <div>
                 <div className="flex items-center gap-3 mb-3">
-                  <span
-                    className="font-mono text-[0.6rem] tracking-[0.16em]"
-                    style={{ color: "var(--brown-500)" }}
-                  >
+                  <span className="font-mono text-[0.6rem] tracking-[0.16em]" style={{ color: "var(--brown-500)" }}>
                     {String(i + 1).padStart(2, "0")}
-                  </span>
-                  <span
-                    className="font-mono text-[0.6rem] tracking-[0.14em] uppercase px-2 py-0.5 border"
-                    style={{
-                      color: "var(--amber-500)",
-                      borderColor: "rgba(200,107,29,0.28)",
-                      background: "rgba(200,107,29,0.06)",
-                    }}
-                  >
-                    {act.tag}
                   </span>
                 </div>
                 <h2
@@ -94,9 +82,21 @@ export default function LifePage() {
                 >
                   {act.label}
                 </h2>
-                <p className="font-mono text-[0.65rem] tracking-[0.1em]" style={{ color: "var(--brown-500)" }}>
-                  {act.detail}
-                </p>
+                {"href" in act ? (
+                  <a
+                    href={act.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="font-mono text-[0.65rem] tracking-[0.1em] transition-colors duration-150 hover:text-[var(--amber-500)]"
+                    style={{ color: "var(--brown-500)" }}
+                  >
+                    {act.detail} →
+                  </a>
+                ) : (
+                  <p className="font-mono text-[0.65rem] tracking-[0.1em]" style={{ color: "var(--brown-500)" }}>
+                    {act.detail}
+                  </p>
+                )}
               </div>
 
               {/* Right */}
@@ -106,7 +106,6 @@ export default function LifePage() {
             </article>
           ))}
         </div>
-
       </section>
 
       <Footer />
