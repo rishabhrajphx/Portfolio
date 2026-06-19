@@ -2,46 +2,7 @@
 
 import Link from "next/link";
 import { useCallback, useEffect, useState } from "react";
-import type { Note } from "@/data/notes";
-
-/* Deep iridescent panels — Annihilation oil-slick, jewel-toned.
-   Each note gets a theme; cream text rides on top of every one. */
-type Theme = {
-  panel: string;
-  glow: string;
-  accent: string;
-};
-
-const themes: Theme[] = [
-  {
-    // Violet / lilac
-    panel: "linear-gradient(135deg, #241d3d 0%, #3d2f63 52%, #5a4488 100%)",
-    glow:
-      "radial-gradient(60% 80% at 80% 15%, rgba(180,150,255,0.55) 0%, transparent 60%), radial-gradient(50% 60% at 10% 90%, rgba(120,210,230,0.40) 0%, transparent 60%)",
-    accent: "#dcceff",
-  },
-  {
-    // Teal / cyan
-    panel: "linear-gradient(135deg, #0f2f38 0%, #15454f 50%, #1f6f78 100%)",
-    glow:
-      "radial-gradient(60% 80% at 78% 18%, rgba(130,235,240,0.50) 0%, transparent 60%), radial-gradient(55% 65% at 8% 88%, rgba(170,235,200,0.38) 0%, transparent 62%)",
-    accent: "#d7f3f4",
-  },
-  {
-    // Amber / rose — warm desert tie-in
-    panel: "linear-gradient(135deg, #3d1d18 0%, #6e3320 50%, #bd5a2c 100%)",
-    glow:
-      "radial-gradient(60% 80% at 80% 16%, rgba(255,200,120,0.50) 0%, transparent 60%), radial-gradient(55% 65% at 10% 90%, rgba(240,160,200,0.40) 0%, transparent 62%)",
-    accent: "#f3d8e7",
-  },
-  {
-    // Mint / green
-    panel: "linear-gradient(135deg, #122e26 0%, #1f4d3a 50%, #357d5a 100%)",
-    glow:
-      "radial-gradient(60% 80% at 78% 18%, rgba(170,240,205,0.48) 0%, transparent 60%), radial-gradient(55% 65% at 8% 88%, rgba(130,220,235,0.38) 0%, transparent 62%)",
-    accent: "#ddf2e6",
-  },
-];
+import { themeForIndex, type Note } from "@/data/notes";
 
 export default function NotesCarousel({ notes }: { notes: Note[] }) {
   const [index, setIndex] = useState(0);
@@ -79,7 +40,7 @@ export default function NotesCarousel({ notes }: { notes: Note[] }) {
           }}
         >
           {notes.map((note, i) => {
-            const theme = themes[i % themes.length];
+            const theme = themeForIndex(i);
             return (
               <article
                 key={note.slug}
@@ -98,20 +59,6 @@ export default function NotesCarousel({ notes }: { notes: Note[] }) {
                       background: theme.glow,
                       mixBlendMode: "overlay",
                       filter: "blur(8px)",
-                    }}
-                  />
-                  {/* Fine grid texture */}
-                  <div
-                    aria-hidden="true"
-                    className="absolute inset-0 pointer-events-none opacity-[0.12]"
-                    style={{
-                      backgroundImage:
-                        "linear-gradient(rgba(255,255,255,0.6) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.6) 1px, transparent 1px)",
-                      backgroundSize: "56px 56px",
-                      maskImage:
-                        "radial-gradient(120% 100% at 50% 0%, #000 30%, transparent 80%)",
-                      WebkitMaskImage:
-                        "radial-gradient(120% 100% at 50% 0%, #000 30%, transparent 80%)",
                     }}
                   />
 

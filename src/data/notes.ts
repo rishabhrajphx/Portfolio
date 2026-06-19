@@ -7,6 +7,50 @@ export type Note = {
   paragraphs: string[];
 };
 
+/* Deep iridescent panel themes — shared by the notes carousel and the
+   article hero so each note keeps a consistent colour identity.
+   Indexed by the note's position in `notes`. */
+export type NoteTheme = {
+  panel: string;
+  glow: string;
+  accent: string;
+};
+
+export const noteThemes: NoteTheme[] = [
+  {
+    // Violet / lilac
+    panel: "linear-gradient(135deg, #241d3d 0%, #3d2f63 52%, #5a4488 100%)",
+    glow:
+      "radial-gradient(60% 80% at 80% 15%, rgba(180,150,255,0.55) 0%, transparent 60%), radial-gradient(50% 60% at 10% 90%, rgba(120,210,230,0.40) 0%, transparent 60%)",
+    accent: "#dcceff",
+  },
+  {
+    // Teal / cyan
+    panel: "linear-gradient(135deg, #0f2f38 0%, #15454f 50%, #1f6f78 100%)",
+    glow:
+      "radial-gradient(60% 80% at 78% 18%, rgba(130,235,240,0.50) 0%, transparent 60%), radial-gradient(55% 65% at 8% 88%, rgba(170,235,200,0.38) 0%, transparent 62%)",
+    accent: "#d7f3f4",
+  },
+  {
+    // Amber / rose — warm desert tie-in
+    panel: "linear-gradient(135deg, #3d1d18 0%, #6e3320 50%, #bd5a2c 100%)",
+    glow:
+      "radial-gradient(60% 80% at 80% 16%, rgba(255,200,120,0.50) 0%, transparent 60%), radial-gradient(55% 65% at 10% 90%, rgba(240,160,200,0.40) 0%, transparent 62%)",
+    accent: "#f3d8e7",
+  },
+  {
+    // Mint / green
+    panel: "linear-gradient(135deg, #122e26 0%, #1f4d3a 50%, #357d5a 100%)",
+    glow:
+      "radial-gradient(60% 80% at 78% 18%, rgba(170,240,205,0.48) 0%, transparent 60%), radial-gradient(55% 65% at 8% 88%, rgba(130,220,235,0.38) 0%, transparent 62%)",
+    accent: "#ddf2e6",
+  },
+];
+
+export function themeForIndex(i: number): NoteTheme {
+  return noteThemes[((i % noteThemes.length) + noteThemes.length) % noteThemes.length];
+}
+
 export const notes: Note[] = [
   {
     slug: "software-is-toolmaking",
