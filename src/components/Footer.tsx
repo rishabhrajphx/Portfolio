@@ -1,9 +1,9 @@
 export default function Footer() {
   const links = [
-    { label: "GitHub", href: "https://github.com/rraj31" },
-    { label: "LinkedIn", href: "https://linkedin.com/in/rishabhraj31" },
+    { label: "GitHub", href: "https://github.com/rishabhrajphx" },
+    { label: "LinkedIn", href: "https://www.linkedin.com/in/rishabhrajcs/" },
     { label: "Letterboxd", href: "https://letterboxd.com" },
-    { label: "Email", href: "mailto:rraj31@asu.edu" },
+    { label: "Email", href: "mailto:rishabhnewmob@gmail.com" },
   ];
 
   return (

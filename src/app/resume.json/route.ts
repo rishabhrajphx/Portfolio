@@ -10,9 +10,9 @@ export function GET() {
       focus: ["AI Systems", "Full-Stack", "iOS", "Infrastructure"],
       location: "Tempe, AZ",
       contact: {
-        email: "rraj31@asu.edu",
-        github: "https://github.com/rraj31",
-        linkedin: "https://linkedin.com/in/rishabhraj31",
+        email: "rishabhnewmob@gmail.com",
+        github: "https://github.com/rishabhrajphx",
+        linkedin: "https://www.linkedin.com/in/rishabhrajcs/",
         letterboxd: "https://letterboxd.com",
       },
       bio: "Software engineer building practical tools for humans, teams, and machines — working across AI agents, mobile apps, automation, and infrastructure.",

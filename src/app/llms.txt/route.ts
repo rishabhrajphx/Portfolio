@@ -6,9 +6,9 @@ const content = `# Rishabh Raj — Portfolio
 Name: Rishabh Raj
 Role: Software Engineer
 Location: Tempe, AZ, USA
-Email: rraj31@asu.edu
-GitHub: https://github.com/rraj31
-LinkedIn: https://linkedin.com/in/rishabhraj31
+Email: rishabhnewmob@gmail.com
+GitHub: https://github.com/rishabhrajphx
+LinkedIn: https://www.linkedin.com/in/rishabhrajcs/
 
 ## Summary
 Software engineer building practical tools for humans, teams, and machines.

@@ -26,11 +26,14 @@ export default function MachinePage() {
             Software Engineer · AI Systems / Full-Stack / iOS / Infrastructure
           </p>
           <p className="font-mono text-xs mt-1" style={{ color: "var(--brown-500)" }}>
-            Tempe, AZ · rraj31@asu.edu
+            Tempe, AZ ·{" "}
+            <a href="mailto:rishabhnewmob@gmail.com" className="hover:text-[var(--amber-500)] transition-colors duration-150">
+              rishabhnewmob@gmail.com
+            </a>
           </p>
           <div className="flex flex-wrap gap-3 mt-6">
             <a
-              href="https://github.com/rraj31"
+              href="https://github.com/rishabhrajphx"
               target="_blank"
               rel="noopener noreferrer"
               className="font-mono text-[0.65rem] tracking-[0.14em] uppercase transition-colors duration-150"
@@ -39,7 +42,7 @@ export default function MachinePage() {
               GitHub →
             </a>
             <a
-              href="https://linkedin.com/in/rishabhraj31"
+              href="https://linkedin.com/in/rishabhrajcs"
               target="_blank"
               rel="noopener noreferrer"
               className="font-mono text-[0.65rem] tracking-[0.14em] uppercase transition-colors duration-150"

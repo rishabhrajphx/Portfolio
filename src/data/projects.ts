@@ -26,7 +26,7 @@ export const projects: Project[] = [
     stack: ["OpenAI", "Python", "WebSockets", "React", "FastAPI"],
     role: "Solo — Architecture, Backend, Frontend",
     status: "SHIPPED",
-    links: [{ label: "GitHub", href: "https://github.com/rraj31" }],
+    links: [{ label: "GitHub", href: "https://github.com/rishabhrajphx" }],
     featured: true,
   },
   {
@@ -41,7 +41,7 @@ export const projects: Project[] = [
     stack: ["Python", "LangChain", "Tesseract", "PostgreSQL", "FastAPI"],
     role: "Solo — Full Stack",
     status: "SHIPPED",
-    links: [{ label: "GitHub", href: "https://github.com/rraj31" }],
+    links: [{ label: "GitHub", href: "https://github.com/rishabhrajphx" }],
     featured: true,
   },
   {
@@ -56,7 +56,7 @@ export const projects: Project[] = [
     stack: ["Swift", "SwiftUI", "Firebase"],
     role: "Founding Engineer, CTO",
     status: "SHIPPED",
-    links: [{ label: "GitHub", href: "https://github.com/rraj31" }],
+    links: [{ label: "App Store", href: "https://apps.apple.com/us/app/out-there-social-club/id6752878123" }],
     featured: true,
   },
   {
@@ -71,7 +71,7 @@ export const projects: Project[] = [
     stack: ["Kubernetes", "Docker", "Linux", "Prometheus", "Grafana", "Tailscale"],
     role: "Solo — Architecture, Ops",
     status: "ONGOING",
-    links: [{ label: "GitHub", href: "https://github.com/rraj31" }],
+    links: [{ label: "GitHub", href: "https://github.com/rishabhrajphx" }],
     featured: true,
   },
   {
