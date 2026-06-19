@@ -347,6 +347,24 @@ body {
   color: var(--amber-500);
 }
 
+/* ─── Area 17 horizontal-line motif ─────────────────────────────────────────── */
+/*
+  Faint ruled lines that increase in presence downward — the OpenAI/Area 17
+  footer signature. The mask fades them in so the band reads as texture,
+  not a table.
+*/
+.line-pattern {
+  background-image: repeating-linear-gradient(
+    to bottom,
+    var(--line-warm-strong) 0,
+    var(--line-warm-strong) 1px,
+    transparent 1px,
+    transparent 7px
+  );
+  -webkit-mask-image: linear-gradient(to bottom, transparent 0%, #000 90%);
+  mask-image: linear-gradient(to bottom, transparent 0%, #000 90%);
+}
+
 /* ─── Reduced motion ────────────────────────────────────────────────────────── */
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {

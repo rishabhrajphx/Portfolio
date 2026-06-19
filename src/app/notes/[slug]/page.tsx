@@ -95,21 +95,67 @@ export default async function NotePage({
         </div>
       </section>
 
-      {/* ── Editorial body ────────────────────────────────────────────── */}
-      <section className="max-w-[720px] mx-auto px-4 md:px-8 lg:px-12 py-14 md:py-20">
-        {note.paragraphs.map((p, i) => (
-          <p
-            key={i}
-            className={
-              i === 0
-                ? "text-xl md:text-2xl leading-[1.6] mb-8"
-                : "text-base md:text-lg leading-[1.85] mb-6"
-            }
-            style={{ color: i === 0 ? "var(--brown-900)" : "var(--brown-700)" }}
+      {/* ── Editorial body — Area 17 two-column ───────────────────────── */}
+      <section className="max-w-[1100px] mx-auto px-4 md:px-8 lg:px-12 py-14 md:py-20">
+        <div className="grid md:grid-cols-[176px_minmax(0,1fr)] gap-10 md:gap-16">
+          {/* Meta rail */}
+          <aside
+            className="md:border-r md:pr-8"
+            style={{ borderColor: "var(--line-warm)" }}
           >
-            {p}
-          </p>
-        ))}
+            <div className="md:sticky md:top-24 flex flex-col gap-7">
+              <div>
+                <p className="eyebrow mb-2">Published</p>
+                <p className="font-mono text-xs tracking-[0.08em]" style={{ color: "var(--brown-700)" }}>
+                  {note.date}
+                </p>
+              </div>
+              <div>
+                <p className="eyebrow mb-3">Filed under</p>
+                <div className="flex flex-wrap gap-2">
+                  {note.tags.map((t) => (
+                    <span
+                      key={t}
+                      className="font-mono text-[0.58rem] tracking-[0.14em] uppercase px-2 py-0.5 rounded-full"
+                      style={{
+                        color: "var(--brown-500)",
+                        border: "1px solid var(--line-warm)",
+                      }}
+                    >
+                      {t}
+                    </span>
+                  ))}
+                </div>
+              </div>
+              <Link
+                href="/notes"
+                className="eyebrow transition-opacity duration-150 hover:opacity-70"
+              >
+                ← All notes
+              </Link>
+            </div>
+          </aside>
+
+          {/* Prose */}
+          <div className="max-w-[680px]">
+            <p
+              className="text-xl md:text-2xl leading-[1.6] mb-8"
+              style={{ color: "var(--brown-900)" }}
+            >
+              {note.paragraphs[0]}
+            </p>
+            <div className="h-px w-full mb-8" style={{ background: "var(--line-warm)" }} />
+            {note.paragraphs.slice(1).map((p, i) => (
+              <p
+                key={i}
+                className="text-base md:text-lg leading-[1.85] mb-6"
+                style={{ color: "var(--brown-700)" }}
+              >
+                {p}
+              </p>
+            ))}
+          </div>
+        </div>
       </section>
 
       {/* ── Next note ─────────────────────────────────────────────────── */}
